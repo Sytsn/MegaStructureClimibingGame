@@ -1,0 +1,11 @@
+This is a template for an FPS Game
+
+Contents
+- Player controller with:
+  - WASD Movement
+  - Sprint
+  - Crouch
+  - Slide
+  - Jump
+- Health
+- Basic (BASIC) Local Multiplayer

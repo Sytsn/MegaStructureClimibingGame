@@ -9,7 +9,7 @@ func physics_update(delta: float) -> void:
 	player.climb_move(delta)
 	
 	
-	if Input.is_action_just_released("climb_action"):
+	if Input.is_action_just_released("climb_action") or player.check_can_climb():
 		finished.emit(FALLING)
 	#if not player.is_on_floor():
 		#finished.emit(FALLING)

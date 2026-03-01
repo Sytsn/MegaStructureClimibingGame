@@ -68,6 +68,8 @@ func move_player(delta: float, input_dir: Vector2, speed: float):
 	velocity *= new_speed
 	
 	move_and_slide()
+	climbing_ray_look_at()
+
 
 
 func air_move_player(delta: float, input_dir: Vector2):
@@ -83,6 +85,7 @@ func air_move_player(delta: float, input_dir: Vector2):
 		velocity += accel_speed * wish_dir
 	
 	move_and_slide()
+	climbing_ray_look_at()
 
 
 func slide_player(delta: float, input_dir: Vector2, speed: float):
@@ -103,6 +106,7 @@ func slide_player(delta: float, input_dir: Vector2, speed: float):
 	velocity *= new_speed
 	
 	move_and_slide()
+	climbing_ray_look_at()
 
 
 func stop_player(delta: float):
@@ -110,6 +114,7 @@ func stop_player(delta: float):
 	velocity.x = move_toward(velocity.x, 0, player_res.move_speed)
 	velocity.z = move_toward(velocity.z, 0, player_res.move_speed)
 	move_and_slide()
+	climbing_ray_look_at()
 
 
 #endregion
@@ -142,6 +147,10 @@ func exit_crouch():
 
 
 #region Climbing
+
+
+func climbing_ray_look_at():
+	climbing_ray.rotation = neck.rotation
 
 
 func check_can_climb():
@@ -189,8 +198,9 @@ func climb_move(delta: float) -> void:
 	# Optional: keep a bit of stick-to-wall force so you don’t detach
 	var stick_force = -wall_normal * 5.0
 
-	velocity = move_dir + stick_force
+	velocity = move_dir 
 	move_and_slide()
+	climbing_ray.rotation = wall_normal
 
 
 func exit_climb():

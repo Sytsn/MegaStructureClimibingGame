@@ -12,7 +12,6 @@ class_name Player extends CharacterBody3D
 @export var player_aim_ray: RayCast3D
 @export var climbing_ray: RayCast3D
 
-
 var health: Health
 var is_paused = false
 var is_crouching = false
@@ -114,7 +113,7 @@ func stop_player(delta: float):
 	velocity.x = move_toward(velocity.x, 0, player_res.move_speed)
 	velocity.z = move_toward(velocity.z, 0, player_res.move_speed)
 	move_and_slide()
-	climbing_ray_look_at()
+	#climbing_ray_look_at()
 
 
 #endregion
@@ -165,20 +164,38 @@ func check_can_climb():
 func enter_climb():
 	var wall = climbing_ray.get_collider()
 	var wall_normal = climbing_ray.get_collision_normal()
-	print(rotation)
-	print(wall_normal)
 	var forward = -wall_normal
 	forward = forward.normalized()
-
+	
 	var basis = Basis()
 	basis = basis.looking_at(forward)
 	self.basis = basis
 	return forward
 
+
+func set_climbing_offset():
+	var wall_normal = climbing_ray.get_collision_normal()
+	var wall_point = climbing_ray.get_collision_point()
+	var to_plane = global_position - wall_point
+	var dist = to_plane.dot(wall_normal)
+	var correction = (player_res.wall_player_offset - dist) * wall_normal
+	global_position += correction
+
+
 func climb_move(delta: float) -> void:
 	# Get input
-	var input_forward = Input.get_action_strength("move_forward") - Input.get_action_strength("move_back")
-	var input_right   = Input.get_action_strength("move_right")   - Input.get_action_strength("move_left")
+	var forward = Input.get_action_strength("move_forward")
+	var backward = Input.get_action_strength("move_back")
+	var left = Input.get_action_strength("move_left")
+	var right = Input.get_action_strength("move_right")
+	
+	if is_on_floor():
+		backward = 0.0
+	if !climbing_ray.is_colliding():
+		forward = 0.0
+	
+	var input_forward = forward - backward
+	var input_right   = right   - left
 
 	# Get wall info
 	var wall_normal: Vector3 = climbing_ray.get_collision_normal()
@@ -187,7 +204,7 @@ func climb_move(delta: float) -> void:
 	var wall_right = v["right"]
 
 	# Build desired velocity along the wall
-	var climb_speed = 4.0
+	var climb_speed = player_res.climb_speed
 	var move_dir = (wall_up * input_forward) + (wall_right * input_right)
 
 	if move_dir.length() > 0.001:
@@ -195,12 +212,9 @@ func climb_move(delta: float) -> void:
 	else:
 		move_dir = Vector3.ZERO
 
-	# Optional: keep a bit of stick-to-wall force so you don’t detach
-	var stick_force = -wall_normal * 5.0
-
 	velocity = move_dir 
+	print(velocity)
 	move_and_slide()
-	climbing_ray.rotation = wall_normal
 
 
 func exit_climb():

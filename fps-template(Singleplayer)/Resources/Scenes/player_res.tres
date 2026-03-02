@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_rh5lk")
-camera_pos = Vector3(5, 1.15, 5)
+camera_pos = Vector3(0, 1.15, 0)
+climb_speed = 7.0
 climb_abilitity = true
 metadata/_custom_type_script = "uid://bobm0qrvdx388"

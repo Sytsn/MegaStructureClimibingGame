@@ -3,13 +3,14 @@ extends PlayerState
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.enter_climb()
+	player.set_climbing_offset()
 
 
 func physics_update(delta: float) -> void:
+	player.set_climbing_offset()
 	player.climb_move(delta)
 	
-	
-	if Input.is_action_just_released("climb_action") or player.check_can_climb():
+	if Input.is_action_just_released("climb_action"):
 		finished.emit(FALLING)
 	#if not player.is_on_floor():
 		#finished.emit(FALLING)

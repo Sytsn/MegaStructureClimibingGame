@@ -13,6 +13,7 @@ class_name PlayerRes extends Resource
 @export var toggle_sprint: bool
 
 @export_category("Climb Movement")
+@export var wall_player_offset: float = 1.0
 @export var climb_speed: float = 10.0
 
 @export_category("Air Movement")

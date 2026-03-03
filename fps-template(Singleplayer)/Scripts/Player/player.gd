@@ -2,6 +2,7 @@ class_name Player extends CharacterBody3D
 
 
 @export var player_res: PlayerRes
+@export var player_settings_res: PlayerSettings
 @export var neck: Node3D
 @export var camera: Camera3D
 @export var collider: CollisionShape3D
@@ -11,6 +12,8 @@ class_name Player extends CharacterBody3D
 @export var health_res: HealthRes
 @export var player_aim_ray: RayCast3D
 @export var climbing_ray: RayCast3D
+@export var camera_spring: CameraSpring
+@export var camera_lean: CameraLean
 
 var health: Health
 var is_paused = false
@@ -50,6 +53,8 @@ func camera_setup():
 #region Player Movement
 
 func move_player(delta: float, input_dir: Vector2, speed: float):
+	var prev_velocity := velocity
+	
 	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
 	var add_speed_till_cap = speed - cur_speed_in_wish_dir
@@ -68,10 +73,16 @@ func move_player(delta: float, input_dir: Vector2, speed: float):
 	
 	move_and_slide()
 	climbing_ray_look_at()
+	
+	var acceleration := (velocity - prev_velocity) / delta
+	if PlayerSettings.player_settings_res.camera_lean_enabled:
+		camera_lean.update_lean(delta, acceleration, Vector3.UP)
 
 
 
 func air_move_player(delta: float, input_dir: Vector2):
+	var prev_velocity := velocity
+	
 	velocity.y += player_res.gravity * delta
 	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	
@@ -85,9 +96,15 @@ func air_move_player(delta: float, input_dir: Vector2):
 	
 	move_and_slide()
 	climbing_ray_look_at()
+	
+	var acceleration := (velocity - prev_velocity) / delta
+	if PlayerSettings.player_settings_res.camera_lean_enabled:
+		camera_lean.update_lean(delta, acceleration, Vector3.UP)
 
 
 func slide_player(delta: float, input_dir: Vector2, speed: float):
+	var prev_velocity := velocity
+	
 	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
 	var add_speed_till_cap = speed - cur_speed_in_wish_dir
@@ -97,7 +114,7 @@ func slide_player(delta: float, input_dir: Vector2, speed: float):
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		velocity += accel_speed * wish_dir
 
-	var control = max(velocity.length(), player_res.slide_decel)
+	var control = max(velocity.length(), player_res.slide_decel) 
 	var drop = control * player_res.slide_friction * delta
 	var new_speed = max(velocity.length() - drop, 0.0)
 	if velocity.length() > 0:
@@ -106,14 +123,24 @@ func slide_player(delta: float, input_dir: Vector2, speed: float):
 	
 	move_and_slide()
 	climbing_ray_look_at()
+	
+	var acceleration := (velocity - prev_velocity) / delta
+	if PlayerSettings.player_settings_res.camera_lean_enabled:
+		camera_lean.update_lean(delta, acceleration, Vector3.UP)
 
 
 func stop_player(delta: float):
+	var prev_velocity := velocity
+	
 	velocity.y += player_res.gravity * delta
 	velocity.x = move_toward(velocity.x, 0, player_res.move_speed)
 	velocity.z = move_toward(velocity.z, 0, player_res.move_speed)
 	move_and_slide()
 	#climbing_ray_look_at()
+	
+	var acceleration := (velocity - prev_velocity) / delta
+	if PlayerSettings.player_settings_res.camera_lean_enabled:
+		camera_lean.update_lean(delta, acceleration, Vector3.UP)
 
 
 #endregion

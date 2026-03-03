@@ -19,6 +19,16 @@ run/main_scene="uid://bb762xwdu003v"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerSettings="*uid://7pc2lkmio42h"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/vsync/vsync_mode=0
+
 [input]
 
 move_forward={

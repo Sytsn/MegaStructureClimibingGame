@@ -102,7 +102,7 @@ size = Vector3(1, 1, 5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.126, 0, -17.009)
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=807724111]
-transform = Transform3D(8.255596, 0, 0, 0, 15.541312, -0.3139759, 0, 5.1394973, 0.94943094, 9.463547, 6.73353, -22.629328)
+transform = Transform3D(18.351645, 0, 0, 0, 15.541312, -0.3139759, 0, 5.1394973, 0.94943094, 14.619316, 6.73353, -22.629328)
 layers = 16
 mesh = SubResource("BoxMesh_lrwwn")
 
@@ -110,17 +110,6 @@ mesh = SubResource("BoxMesh_lrwwn")
 collision_layer = 17
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D" unique_id=687752109]
-shape = SubResource("ConvexPolygonShape3D_lrwwn")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1396865684]
-transform = Transform3D(8.255596, 0, 0, 0, 11.541916, -0.7091033, 0, 11.60737, 0.7051047, 17.77776, 5.4912715, -19.54583)
-layers = 16
-mesh = SubResource("BoxMesh_lrwwn")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D5" unique_id=202510884]
-collision_layer = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D5/StaticBody3D" unique_id=1760102065]
 shape = SubResource("ConvexPolygonShape3D_lrwwn")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1642804214]
@@ -132,15 +121,4 @@ mesh = SubResource("BoxMesh_lrwwn")
 collision_layer = 17
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D" unique_id=1992482847]
-shape = SubResource("ConvexPolygonShape3D_lrwwn")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=1640218016]
-transform = Transform3D(6.2895536, 0, 0, 0, 16.369081, 0, 0, 0, -4.83645, -15.726604, 6.73353, -12.031464)
-layers = 16
-mesh = SubResource("BoxMesh_lrwwn")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D6" unique_id=1931396278]
-collision_layer = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D6/StaticBody3D" unique_id=413064052]
 shape = SubResource("ConvexPolygonShape3D_lrwwn")

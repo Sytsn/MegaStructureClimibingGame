@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://n1bmpmajeq05"]
 
 [ext_resource type="Script" uid="uid://bmkf77va2rnnq" path="res://Scripts/Player/player.gd" id="1_qk52v"]
-[ext_resource type="Resource" uid="uid://g31nmw7wil4" path="res://Resources/Scenes/player_res.tres" id="2_0u5uq"]
+[ext_resource type="Resource" uid="uid://g31nmw7wil4" path="res://Resources/Scenes/Player/player_res.tres" id="2_0u5uq"]
 [ext_resource type="Script" uid="uid://qxxp28vujgu" path="res://Scripts/StateMachine/state_machine.gd" id="2_eiqen"]
-[ext_resource type="Resource" uid="uid://dh5trr05tp3q1" path="res://Resources/Scenes/player_health_res.tres" id="3_74mp2"]
+[ext_resource type="Resource" uid="uid://dh5trr05tp3q1" path="res://Resources/Scenes/Player/player_health_res.tres" id="3_74mp2"]
 [ext_resource type="Script" uid="uid://bd1o3e1mpvsf" path="res://Scripts/States/Player/walking.gd" id="3_aep1g"]
+[ext_resource type="Resource" uid="uid://c16j7vh5qe1wv" path="res://Resources/Scenes/Player/player_settings.tres" id="3_dey5f"]
 [ext_resource type="Script" uid="uid://d8j3cnaa1equ" path="res://Scripts/States/Player/idle.gd" id="4_kngvf"]
 [ext_resource type="Script" uid="uid://cxa1udd8bx2cy" path="res://Scripts/States/Player/falling.gd" id="5_hfx5k"]
 [ext_resource type="Script" uid="uid://cjnvsygxiw5ii" path="res://Scripts/States/Player/jumping.gd" id="6_duo2v"]
@@ -12,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://bq4k7lthwmvsv" path="res://Scenes/UI/player_ui.tscn" id="9_gk6dx"]
 [ext_resource type="Script" uid="uid://b205udyuifj6g" path="res://Scripts/States/Player/sliding.gd" id="10_jhyir"]
 [ext_resource type="Script" uid="uid://boenqew4u7kej" path="res://Scripts/States/Player/climbing.gd" id="12_oikmp"]
+[ext_resource type="Script" uid="uid://dgq3dbu5q0mtk" path="res://Scripts/Player/camera_spring.gd" id="13_06tpx"]
+[ext_resource type="Script" uid="uid://doj8y8fjj2j75" path="res://Scripts/Player/camera_lean.gd" id="14_7g0yx"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pj3iw"]
 points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
@@ -21,18 +24,21 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gk6dx"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "mesh", "crouch_shape_cast", "player_aim_ray", "climbing_ray")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "mesh", "crouch_shape_cast", "player_aim_ray", "climbing_ray", "camera_spring", "camera_lean")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
+player_settings_res = ExtResource("3_dey5f")
 neck = NodePath("Neck")
-camera = NodePath("Neck/Camera3D")
+camera = NodePath("Neck/CameraSpring/CameraLean/Camera3D")
 collider = NodePath("CollisionShape3D")
 mesh = NodePath("CollisionShape3D/MeshInstance3D")
 is_multiplayer = false
 crouch_shape_cast = NodePath("ShapeCast3D")
 health_res = ExtResource("3_74mp2")
-player_aim_ray = NodePath("Neck/Camera3D/PlayerAim")
+player_aim_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
 climbing_ray = NodePath("Climb")
+camera_spring = NodePath("Neck/CameraSpring")
+camera_lean = NodePath("Neck/CameraSpring/CameraLean")
 
 [node name="PlayerUI" parent="." unique_id=2081950460 node_paths=PackedStringArray("player") instance=ExtResource("9_gk6dx")]
 player = NodePath("..")
@@ -73,9 +79,17 @@ script = ExtResource("12_oikmp")
 [node name="Neck" type="Node3D" parent="." unique_id=1849357523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Neck" unique_id=58166968]
+[node name="CameraSpring" type="Node3D" parent="Neck" unique_id=352748935]
+script = ExtResource("13_06tpx")
+angular_displacement = 3.0
+linear_displacement = 0.1
 
-[node name="PlayerAim" type="RayCast3D" parent="Neck/Camera3D" unique_id=110277990]
+[node name="CameraLean" type="Node3D" parent="Neck/CameraSpring" unique_id=768575197]
+script = ExtResource("14_7g0yx")
+
+[node name="Camera3D" type="Camera3D" parent="Neck/CameraSpring/CameraLean" unique_id=58166968]
+
+[node name="PlayerAim" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
 target_position = Vector3(0, 0, -1000)
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1528224476]

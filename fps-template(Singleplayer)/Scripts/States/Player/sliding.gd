@@ -5,8 +5,6 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 
 func physics_update(delta: float) -> void:
-	if !player.is_multiplayer_authority() && player.is_multiplayer: return
-	
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var floor_angle := player.get_floor_angle()
 	var slide_dir: Vector2 = Vector2(input_dir.x, 0)

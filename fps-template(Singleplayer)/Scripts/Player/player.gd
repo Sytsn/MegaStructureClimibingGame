@@ -33,6 +33,7 @@ func _ready() -> void:
 func setup_player():
 	health_setup()
 	camera_setup()
+	climbing_ray_setup()
 
 
 func health_setup():
@@ -46,6 +47,11 @@ func camera_setup():
 		return
 	camera.position = player_res.camera_pos
 
+
+func climbing_ray_setup():
+	climbing_ray.target_position = global_transform.basis * player_res.climbing_ray_target_pos
+	climbing_ray.rotation = Vector3.ZERO
+	climbing_ray.position = Vector3.ZERO
 
 #endregion
 
@@ -72,7 +78,6 @@ func move_player(delta: float, input_dir: Vector2, speed: float):
 	velocity *= new_speed
 	
 	move_and_slide()
-	climbing_ray_look_at()
 	
 	var acceleration := (velocity - prev_velocity) / delta
 	if PlayerSettings.player_settings_res.camera_lean_enabled:
@@ -95,7 +100,6 @@ func air_move_player(delta: float, input_dir: Vector2):
 		velocity += accel_speed * wish_dir
 	
 	move_and_slide()
-	climbing_ray_look_at()
 	
 	var acceleration := (velocity - prev_velocity) / delta
 	if PlayerSettings.player_settings_res.camera_lean_enabled:
@@ -122,7 +126,6 @@ func slide_player(delta: float, input_dir: Vector2, speed: float):
 	velocity *= new_speed
 	
 	move_and_slide()
-	climbing_ray_look_at()
 	
 	var acceleration := (velocity - prev_velocity) / delta
 	if PlayerSettings.player_settings_res.camera_lean_enabled:
@@ -175,10 +178,6 @@ func exit_crouch():
 #region Climbing
 
 
-func climbing_ray_look_at():
-	climbing_ray.rotation = neck.rotation
-
-
 func check_can_climb():
 	if !player_res.climb_abilitity:
 		return false
@@ -197,6 +196,8 @@ func enter_climb():
 	var basis = Basis()
 	basis = basis.looking_at(forward)
 	self.basis = basis
+	
+	climbing_ray.reparent(self)
 	return forward
 
 
@@ -246,7 +247,8 @@ func climb_move(delta: float) -> void:
 
 func exit_climb():
 	rotation = Vector3.ZERO
-
+	climbing_ray.reparent(camera)
+	climbing_ray_setup()
 
 func get_wall_space_vectors(wall_normal: Vector3) -> Dictionary:
 	# Wall normal points out of the wall
@@ -267,6 +269,7 @@ func get_wall_space_vectors(wall_normal: Vector3) -> Dictionary:
 		"right": wall_right,
 		"normal": n,
 	}
+
 
 #endregion
 

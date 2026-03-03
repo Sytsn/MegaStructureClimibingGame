@@ -13,6 +13,7 @@ class_name PlayerRes extends Resource
 @export var toggle_sprint: bool
 
 @export_category("Climb Movement")
+@export var climbing_ray_target_pos: Vector3 = Vector3(0, 0, -1.5)
 @export var wall_player_offset: float = 1.0
 @export var climb_speed: float = 10.0
 

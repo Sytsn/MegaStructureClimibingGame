@@ -5,8 +5,6 @@ func enter(previous_state_path: String, data := {}) -> void:
 	#player.animation_player.play("idle")
 
 func physics_update(delta: float) -> void:
-	if !player.is_multiplayer_authority() && player.is_multiplayer: return
-	
 	player.stop_player(delta)
 
 	if not player.is_on_floor():

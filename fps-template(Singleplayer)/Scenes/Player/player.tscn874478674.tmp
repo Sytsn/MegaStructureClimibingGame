@@ -34,7 +34,7 @@ is_multiplayer = false
 crouch_shape_cast = NodePath("ShapeCast3D")
 health_res = ExtResource("3_74mp2")
 player_aim_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
-climbing_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/Climb")
+climbing_ray = NodePath("Climb")
 camera_spring = NodePath("Neck/CameraSpring")
 camera_lean = NodePath("Neck/CameraSpring/CameraLean")
 
@@ -90,12 +90,13 @@ script = ExtResource("14_7g0yx")
 [node name="PlayerAim" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
 target_position = Vector3(0, 0, -1000)
 
-[node name="Climb" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=201126113]
-target_position = Vector3(0, 0, 0)
-collision_mask = 16
-
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1528224476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_gk6dx")
 target_position = Vector3(0, 1.5, 0)
 debug_shape_custom_color = Color(0.7194535, 2.5509298e-06, 5.7756904e-07, 1)
+
+[node name="Climb" type="RayCast3D" parent="." unique_id=201126113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+target_position = Vector3(0, 0, -1.5)
+collision_mask = 16

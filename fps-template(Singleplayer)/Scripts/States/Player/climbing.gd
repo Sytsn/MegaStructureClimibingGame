@@ -22,5 +22,22 @@ func physics_update(delta: float) -> void:
 		#finished.emit(WALKING)
 
 
+func handle_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		player.neck.rotate_y(-event.relative.x * player.player_res.mouse_sens)
+		player.camera.rotate_x(-event.relative.y * player.player_res.mouse_sens)
+		
+		player.camera.rotation.x = clamp(
+			player.camera.rotation.x,
+			deg_to_rad(-90),
+			deg_to_rad(90)
+		)
+		player.neck.rotation.y = clamp(
+			player.neck.rotation.y,
+			deg_to_rad(-160),
+			deg_to_rad(160)
+		)
+
+
 func exit() -> void:
 	player.exit_climb()

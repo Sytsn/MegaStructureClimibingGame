@@ -11,9 +11,15 @@ class_name Player extends CharacterBody3D
 @export var crouch_shape_cast: ShapeCast3D
 @export var health_res: HealthRes
 @export var player_aim_ray: RayCast3D
-@export var climbing_ray: RayCast3D
 @export var camera_spring: CameraSpring
 @export var camera_lean: CameraLean
+
+@export_category("Climbing Rays")
+@export var climbing_ray: RayCast3D
+@export var low_climbing_rays_array: Array[RayCast3D]
+@export var mid_climbing_rays_array: Array[RayCast3D]
+@export var high_climbing_rays_array: Array[RayCast3D]
+
 
 var health: Health
 var is_paused = false
@@ -33,7 +39,7 @@ func _ready() -> void:
 func setup_player():
 	health_setup()
 	camera_setup()
-	climbing_ray_setup()
+	climbing_rays_setup()
 
 
 func health_setup():
@@ -48,10 +54,8 @@ func camera_setup():
 	camera.position = player_res.camera_pos
 
 
-func climbing_ray_setup():
+func climbing_rays_setup():
 	climbing_ray.target_position = global_transform.basis * player_res.climbing_ray_target_pos
-	climbing_ray.rotation = Vector3.ZERO
-	climbing_ray.position = Vector3.ZERO
 
 #endregion
 
@@ -186,7 +190,9 @@ func check_can_climb():
 	else:
 		return true
 
-
+# This is broken when climbing in a NON -Z facing direction. This is probably because how I am doing this, so before I move on I will blow this up. 
+# But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the player not just forward. WE DO NOT WANT TO ROTATE THE PLAYER ALONG THE Y AXIS
+# The player can tilt but should not spin, that causes issues.
 func enter_climb():
 	var wall = climbing_ray.get_collider()
 	var wall_normal = climbing_ray.get_collision_normal()
@@ -226,7 +232,7 @@ func climb_move(delta: float) -> void:
 	var input_right   = right   - left
 
 	# Get wall info
-	var wall_normal: Vector3 = climbing_ray.get_collision_normal()
+	var wall_normal: Vector3 = get_average_normal()
 	var v = get_wall_space_vectors(wall_normal)
 	var wall_up    = v["up"]
 	var wall_right = v["right"]
@@ -245,10 +251,33 @@ func climb_move(delta: float) -> void:
 	move_and_slide()
 
 
+func get_average_normal() -> Vector3:
+	var total_normals = Vector3.ZERO
+	var total_hits = 0
+	
+	for ray in low_climbing_rays_array:
+		if ray.is_colliding():
+			total_normals += ray.get_collision_normal()
+			total_hits += 1
+	for ray in mid_climbing_rays_array:
+		if ray.is_colliding():
+			total_normals += ray.get_collision_normal()
+			total_hits += 1
+	for ray in high_climbing_rays_array:
+		if ray.is_colliding():
+			total_normals += ray.get_collision_normal()
+			total_hits += 1
+	
+	var average_normal = total_normals / total_hits
+	return average_normal
+
+
 func exit_climb():
 	rotation = Vector3.ZERO
 	climbing_ray.reparent(camera)
-	climbing_ray_setup()
+	climbing_ray.rotation = Vector3.ZERO
+	climbing_ray.position = Vector3.ZERO
+
 
 func get_wall_space_vectors(wall_normal: Vector3) -> Dictionary:
 	# Wall normal points out of the wall

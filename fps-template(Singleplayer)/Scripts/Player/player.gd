@@ -2,7 +2,7 @@ class_name Player extends CharacterBody3D
 
 
 @export var player_res: PlayerRes
-@export var player_settings_res: PlayerSettings
+@export var player_settings_res: PlayerSettingsRes
 @export var neck: Node3D
 @export var camera: Camera3D
 @export var collider: CollisionShape3D
@@ -19,6 +19,10 @@ class_name Player extends CharacterBody3D
 @export var low_climbing_rays_array: Array[RayCast3D]
 @export var mid_climbing_rays_array: Array[RayCast3D]
 @export var high_climbing_rays_array: Array[RayCast3D]
+
+@export_category("MovementScripts")
+@export var basic_movement: BasicMovement
+@export var climbing_movement: ClimbingMovement
 
 
 var health: Health
@@ -63,77 +67,18 @@ func climbing_rays_setup():
 #region Player Movement
 
 func move_player(delta: float, input_dir: Vector2, speed: float):
-	var prev_velocity := velocity
-	
-	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
-	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
-	var add_speed_till_cap = speed - cur_speed_in_wish_dir
-
-	if add_speed_till_cap > 0:
-		var accel_speed = player_res.air_accel * delta * speed
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		velocity += accel_speed * wish_dir
-
-	var control = max(velocity.length(), player_res.ground_decel)
-	var drop = control * player_res.ground_friction * delta
-	var new_speed = max(velocity.length() - drop, 0.0)
-	if velocity.length() > 0:
-		new_speed /= velocity.length()
-	velocity *= new_speed
-	
-	move_and_slide()
-	
-	var acceleration := (velocity - prev_velocity) / delta
-	if PlayerSettings.player_settings_res.camera_lean_enabled:
-		camera_lean.update_lean(delta, acceleration, Vector3.UP)
-
+	if basic_movement:
+		basic_movement.move_parent(delta, input_dir, speed)
 
 
 func air_move_player(delta: float, input_dir: Vector2):
-	var prev_velocity := velocity
-	
-	velocity.y += player_res.gravity * delta
-	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
-	
-	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
-	var capped_speed = min((player_res.air_move_speed * wish_dir).length(), player_res.air_cap)
-	var add_speed_till_cap = capped_speed - cur_speed_in_wish_dir
-	if add_speed_till_cap > 0:
-		var accel_speed = player_res.air_accel * player_res.air_move_speed * delta
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		velocity += accel_speed * wish_dir
-	
-	move_and_slide()
-	
-	var acceleration := (velocity - prev_velocity) / delta
-	if PlayerSettings.player_settings_res.camera_lean_enabled:
-		camera_lean.update_lean(delta, acceleration, Vector3.UP)
+	if basic_movement:
+		basic_movement.air_move_parent(delta, input_dir)
 
 
 func slide_player(delta: float, input_dir: Vector2, speed: float):
-	var prev_velocity := velocity
-	
-	var wish_dir = neck.basis * Vector3(input_dir.x, 0.0, input_dir.y)
-	var cur_speed_in_wish_dir = velocity.dot(wish_dir)
-	var add_speed_till_cap = speed - cur_speed_in_wish_dir
-
-	if add_speed_till_cap > 0:
-		var accel_speed = player_res.slide_accel * delta * speed
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		velocity += accel_speed * wish_dir
-
-	var control = max(velocity.length(), player_res.slide_decel) 
-	var drop = control * player_res.slide_friction * delta
-	var new_speed = max(velocity.length() - drop, 0.0)
-	if velocity.length() > 0:
-		new_speed /= velocity.length()
-	velocity *= new_speed
-	
-	move_and_slide()
-	
-	var acceleration := (velocity - prev_velocity) / delta
-	if PlayerSettings.player_settings_res.camera_lean_enabled:
-		camera_lean.update_lean(delta, acceleration, Vector3.UP)
+	if basic_movement:
+		basic_movement.stop_parent(delta)
 
 
 func stop_player(delta: float):
@@ -194,110 +139,23 @@ func check_can_climb():
 # But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the player not just forward. WE DO NOT WANT TO ROTATE THE PLAYER ALONG THE Y AXIS
 # The player can tilt but should not spin, that causes issues.
 func enter_climb():
-	var wall = climbing_ray.get_collider()
-	var wall_normal = climbing_ray.get_collision_normal()
-	var forward = -wall_normal
-	forward = forward.normalized()
-	
-	var basis = Basis()
-	basis = basis.looking_at(forward)
-	self.basis = basis
-	
-	climbing_ray.reparent(self)
-	return forward
+	if climbing_movement:
+		climbing_movement.enter_climb()
 
 
 func set_climbing_offset():
-	var wall_normal = climbing_ray.get_collision_normal()
-	var wall_point = climbing_ray.get_collision_point()
-	var to_plane = global_position - wall_point
-	var dist = to_plane.dot(wall_normal)
-	var correction = (player_res.wall_player_offset - dist) * wall_normal
-	global_position += correction
+	if climbing_movement:
+		climbing_movement.set_climbing_offset()
 
 
 func climb_move(delta: float) -> void:
-	# Get input
-	var forward = Input.get_action_strength("move_forward")
-	var backward = Input.get_action_strength("move_back")
-	var left = Input.get_action_strength("move_left")
-	var right = Input.get_action_strength("move_right")
-	
-	if is_on_floor():
-		backward = 0.0
-	if !climbing_ray.is_colliding():
-		forward = 0.0
-	
-	var input_forward = forward - backward
-	var input_right   = right   - left
-
-	# Get wall info
-	var wall_normal: Vector3 = get_average_normal()
-	var v = get_wall_space_vectors(wall_normal)
-	var wall_up    = v["up"]
-	var wall_right = v["right"]
-
-	# Build desired velocity along the wall
-	var climb_speed = player_res.climb_speed
-	var move_dir = (wall_up * input_forward) + (wall_right * input_right)
-
-	if move_dir.length() > 0.001:
-		move_dir = move_dir.normalized() * climb_speed
-	else:
-		move_dir = Vector3.ZERO
-
-	velocity = move_dir 
-	print(velocity)
-	move_and_slide()
-
-
-func get_average_normal() -> Vector3:
-	var total_normals = Vector3.ZERO
-	var total_hits = 0
-	
-	for ray in low_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	for ray in mid_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	for ray in high_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	
-	var average_normal = total_normals / total_hits
-	return average_normal
+	if climbing_movement:
+		climbing_movement.climb_move(delta)
 
 
 func exit_climb():
-	rotation = Vector3.ZERO
-	climbing_ray.reparent(camera)
-	climbing_ray.rotation = Vector3.ZERO
-	climbing_ray.position = Vector3.ZERO
-
-
-func get_wall_space_vectors(wall_normal: Vector3) -> Dictionary:
-	# Wall normal points out of the wall
-	var n = wall_normal.normalized()
-
-	# Choose a reference up. If the wall is near vertical, global up works.
-	var world_up = Vector3.UP
-
-	# "Up" along the wall: remove the component of world_up that points into the wall
-	# This gives a direction that is parallel to the wall surface.
-	var wall_up = (world_up - world_up.project(n)).normalized()
-
-	# "Right" along the wall (sideways tangent)
-	var wall_right = wall_up.cross(n).normalized()
-
-	return {
-		"up": wall_up,
-		"right": wall_right,
-		"normal": n,
-	}
+	if climbing_movement:
+		climbing_movement.exit_climb()
 
 
 #endregion

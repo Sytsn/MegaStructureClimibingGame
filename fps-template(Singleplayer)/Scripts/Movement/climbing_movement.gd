@@ -16,27 +16,17 @@ func check_can_climb():
 # But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the parent not just forward. WE DO NOT WANT TO ROTATE THE parent ALONG THE Y AXIS
 # The parent can tilt but should not spin, that causes issues.
 func enter_climb():
-	var wall_normal = get_average_normal().normalized()  # Use average for stability
+	var wall = parent.climbing_ray.get_collider()
+	var wall_normal = parent.climbing_ray.get_collision_normal()
+	var forward = -wall_normal
+	forward = forward.normalized()
+	
+	var basis = Basis()
+	basis = basis.looking_at(forward)
+	parent.basis = basis
+	
 	parent.climbing_ray.reparent(parent)
-	
-	# Align player Y to wall normal (player "up" follows wall)
-	var new_basis = Basis()
-	new_basis.y = wall_normal
-	
-	# Compute X from cross of current -Z (forward) and normal, or fallback
-	var current_forward = -parent.transform.basis.z  # Preserve player's facing direction
-	new_basis.x = current_forward.cross(wall_normal).normalized()
-	
-	# Ensure orthogonality: Z = X cross Y
-	new_basis.z = new_basis.x.cross(new_basis.y).normalized()
-	
-	# Orthonormalize and apply (handles any skew)
-	parent.basis = new_basis.orthonormalized()
-	
-	# Optional: Smooth lerp for less snap
-	# parent.basis = parent.basis.slerp(new_basis.orthonormalized(), 0.2)
-	
-	return -wall_normal  # Forward relative to new orientation
+	return forward
 
 
 func set_climbing_offset():

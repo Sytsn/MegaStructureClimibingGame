@@ -2,7 +2,9 @@ extends PlayerState
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.velocity.x = 0.0
-	#player.animation_player.play("idle")
+	var animation = player.animation_player.get_animation("Idle")
+	animation.loop_mode = Animation.LOOP_LINEAR
+	player.animation_player.play("Idle")
 
 func physics_update(delta: float) -> void:
 	player.stop_player(delta)

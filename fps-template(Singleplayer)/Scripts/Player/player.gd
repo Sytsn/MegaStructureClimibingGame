@@ -13,6 +13,7 @@ class_name Player extends CharacterBody3D
 @export var player_aim_ray: RayCast3D
 @export var camera_spring: CameraSpring
 @export var camera_lean: CameraLean
+@export var fps_arms: Node3D
 
 @export_category("Climbing Rays")
 @export var climbing_ray: RayCast3D
@@ -26,6 +27,8 @@ class_name Player extends CharacterBody3D
 
 
 var health: Health
+var animation_player: AnimationPlayer
+
 var is_paused = false
 var is_crouching = false
 var exiting_crouching = false
@@ -44,6 +47,7 @@ func setup_player():
 	health_setup()
 	camera_setup()
 	climbing_rays_setup()
+	fps_arms_setup()
 
 
 func health_setup():
@@ -56,6 +60,10 @@ func camera_setup():
 		print("No camera set")
 		return
 	camera.position = player_res.camera_pos
+
+
+func fps_arms_setup():
+	animation_player = fps_arms.find_child("AnimationPlayer")
 
 
 func climbing_rays_setup():

@@ -40,6 +40,6 @@ offset_top = 14.0
 offset_right = -20.0
 offset_bottom = 45.0
 grow_horizontal = 0
-text = "Damage +"
+text = "Swap to world Camera"
 
 [connection signal="pressed" from="Damage" to="." method="_on_damage_pressed"]

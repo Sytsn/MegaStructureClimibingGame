@@ -19,6 +19,7 @@ func _ready() -> void:
 func update(delta: float) -> void:
 	crouch_inputs()
 	ui_inputs()
+	player.follow_camera()
 
 
 func handle_input(event: InputEvent) -> void:

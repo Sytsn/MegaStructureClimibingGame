@@ -1,8 +1,10 @@
 extends PlayerState
 
+var animation: Animation
+
 func enter(previous_state_path: String, data := {}) -> void:
 	player.velocity.x = 0.0
-	var animation = player.animation_player.get_animation("Idle")
+	animation = player.animation_player.get_animation("Idle")
 	animation.loop_mode = Animation.LOOP_LINEAR
 	player.animation_player.play("Idle")
 
@@ -19,3 +21,8 @@ func physics_update(delta: float) -> void:
 		finished.emit(SPRINTING)
 	elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_forward" ) or Input.is_action_pressed("move_back"):
 		finished.emit(WALKING)
+
+
+#func exit() -> void:
+	#animation.loop_mode = Animation.LOOP_NONE
+	#player.animation_player.stop()

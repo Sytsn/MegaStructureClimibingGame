@@ -1,6 +1,7 @@
 class_name PlayerRes extends Resource
 
 @export var camera_pos: Vector3
+@export var fps_arms_rot: Vector3 = Vector3(0, 180, 0)
 
 @export_category("Movement")
 @export var move_speed: float = 7.0

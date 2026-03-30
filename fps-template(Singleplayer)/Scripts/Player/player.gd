@@ -6,14 +6,13 @@ class_name Player extends CharacterBody3D
 @export var neck: Node3D
 @export var camera: Camera3D
 @export var collider: CollisionShape3D
-@export var mesh: MeshInstance3D
 @export var is_multiplayer: bool = true
 @export var crouch_shape_cast: ShapeCast3D
 @export var health_res: HealthRes
 @export var player_aim_ray: RayCast3D
 @export var camera_spring: CameraSpring
 @export var camera_lean: CameraLean
-@export var fps_arms: Node3D
+@export var fps_arms: FPSArms
 
 @export_category("Climbing Rays")
 @export var climbing_ray: RayCast3D
@@ -63,6 +62,7 @@ func camera_setup():
 
 
 func fps_arms_setup():
+	fps_arms.global_position = camera.global_position
 	animation_player = fps_arms.find_child("AnimationPlayer")
 
 
@@ -164,6 +164,17 @@ func climb_move(delta: float) -> void:
 func exit_climb():
 	if climbing_movement:
 		climbing_movement.exit_climb()
+
+
+#endregion
+
+
+
+#region FPS Arms
+
+
+func follow_camera():
+	fps_arms.rotation = neck.rotation + Vector3(deg_to_rad(player_res.fps_arms_rot.x), deg_to_rad(player_res.fps_arms_rot.y), deg_to_rad(player_res.fps_arms_rot.z))
 
 
 #endregion

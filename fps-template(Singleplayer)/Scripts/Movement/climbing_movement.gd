@@ -16,6 +16,7 @@ func check_can_climb():
 # But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the parent not just forward. WE DO NOT WANT TO ROTATE THE parent ALONG THE Y AXIS
 # The parent can tilt but should not spin, that causes issues.
 func enter_climb():
+	parent.fps_arms.enable_ik()
 	var wall = parent.climbing_ray.get_collider()
 	var wall_normal = parent.climbing_ray.get_collision_normal()
 	var forward = -wall_normal

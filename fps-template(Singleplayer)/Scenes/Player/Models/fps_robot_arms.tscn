@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://ckvpebmkhv0oe"]
 
 [ext_resource type="PackedScene" uid="uid://cg32w6yf6uvcx" path="res://Assets/Models/Player/FPS Robot Arms.glb" id="1_82637"]
+[ext_resource type="Script" uid="uid://ccqrei43wnaa0" path="res://Scripts/Player/fps_robot_arms.gd" id="2_5pj6r"]
 
 [node name="FPS Robot Arms" unique_id=940849563 instance=ExtResource("1_82637")]
+script = ExtResource("2_5pj6r")
 
 [node name="Skeleton3D" parent="Rig" parent_id_path=PackedInt32Array(1287037531) index="0" unique_id=990493891]
 bones/1/position = Vector3(0.61595446, 0.0019708876, -7.024612e-08)
@@ -68,6 +70,7 @@ bones/52/position = Vector3(-3.6687124, 0.038491312, 0.0038198528)
 bones/52/rotation = Quaternion(-0.008807481, -0.008830025, 0.70756584, 0.70653737)
 
 [node name="TwoBoneIK3D" type="TwoBoneIK3D" parent="Rig/Skeleton3D" index="1" unique_id=2011683822]
+active = false
 setting_count = 2
 settings/0/target_node = NodePath("../../../LHandTaget")
 settings/0/pole_node = NodePath("../../../LPoleTarget")
@@ -93,6 +96,7 @@ settings/1/use_virtual_end = false
 settings/1/extend_end_bone = false
 
 [node name="CopyTransformModifier3D" type="CopyTransformModifier3D" parent="Rig/Skeleton3D" index="2" unique_id=972939145]
+active = false
 setting_count = 2
 settings/0/amount = 1.0
 settings/0/apply_bone_name = "Wrist_L"
@@ -114,10 +118,10 @@ settings/1/invert = 0
 settings/1/additive = false
 
 [node name="LHandTaget" type="Marker3D" parent="." index="2" unique_id=126446892]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 1, 0, 0)
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.21104658, 0, 0.5758321)
 
 [node name="RHandTaget" type="Marker3D" parent="." index="3" unique_id=1563233689]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1, 0, 0)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.21235776, 0, 0.56966305)
 
 [node name="LPoleTarget" type="Marker3D" parent="." index="4" unique_id=217025016]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7087079, 0, -0.55058694)

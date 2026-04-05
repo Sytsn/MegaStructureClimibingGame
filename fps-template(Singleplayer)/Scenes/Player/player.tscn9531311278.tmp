@@ -30,28 +30,27 @@ top_radius = 0.01
 bottom_radius = 0.1
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "climbing_ray", "low_climbing_rays_array", "mid_climbing_rays_array", "high_climbing_rays_array", "basic_movement", "climbing_movement", "test_rotation", "climbing_pivot")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "climbing_ray", "low_climbing_rays_array", "mid_climbing_rays_array", "high_climbing_rays_array", "basic_movement", "climbing_movement", "test_rotation")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
 player_settings_res = ExtResource("3_r5xpd")
-neck = NodePath("ClimbingPivot/Neck")
-camera = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D")
+neck = NodePath("Neck")
+camera = NodePath("Neck/CameraSpring/CameraLean/Camera3D")
 collider = NodePath("CollisionShape3D")
 is_multiplayer = false
 crouch_shape_cast = NodePath("ShapeCast3D")
 health_res = ExtResource("3_74mp2")
-player_aim_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
-camera_spring = NodePath("ClimbingPivot/Neck/CameraSpring")
-camera_lean = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean")
-fps_arms = NodePath("ClimbingPivot/FPS Robot Arms")
-climbing_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/Climb")
+player_aim_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
+camera_spring = NodePath("Neck/CameraSpring")
+camera_lean = NodePath("Neck/CameraSpring/CameraLean")
+fps_arms = NodePath("FPS Robot Arms")
+climbing_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/Climb")
 low_climbing_rays_array = [NodePath("ClimbingRays/Low/Forward"), NodePath("ClimbingRays/Low/Left"), NodePath("ClimbingRays/Low/Right"), NodePath("ClimbingRays/Low/F+L"), NodePath("ClimbingRays/Low/F+R")]
 mid_climbing_rays_array = [NodePath("ClimbingRays/Mid/Forward"), NodePath("ClimbingRays/Mid/Left"), NodePath("ClimbingRays/Mid/Right"), NodePath("ClimbingRays/Mid/F+L"), NodePath("ClimbingRays/Mid/F+R")]
 high_climbing_rays_array = [NodePath("ClimbingRays/High/Forward"), NodePath("ClimbingRays/High/Left"), NodePath("ClimbingRays/High/Right"), NodePath("ClimbingRays/High/F+L"), NodePath("ClimbingRays/High/F+R")]
 basic_movement = NodePath("Scripts/BasicMovement")
 climbing_movement = NodePath("Scripts/Climbing")
 test_rotation = NodePath("TestRotation")
-climbing_pivot = NodePath("ClimbingPivot")
 
 [node name="PlayerUI" parent="." unique_id=2081950460 node_paths=PackedStringArray("player") instance=ExtResource("9_gk6dx")]
 player = NodePath("..")
@@ -84,6 +83,25 @@ script = ExtResource("10_jhyir")
 
 [node name="Climbing" type="Node" parent="StateMachine" unique_id=471770964]
 script = ExtResource("12_oikmp")
+
+[node name="Neck" type="Node3D" parent="." unique_id=1849357523]
+
+[node name="CameraSpring" type="Node3D" parent="Neck" unique_id=352748935]
+script = ExtResource("13_06tpx")
+angular_displacement = 3.0
+linear_displacement = 0.1
+
+[node name="CameraLean" type="Node3D" parent="Neck/CameraSpring" unique_id=768575197]
+script = ExtResource("14_7g0yx")
+
+[node name="Camera3D" type="Camera3D" parent="Neck/CameraSpring/CameraLean" unique_id=58166968]
+
+[node name="PlayerAim" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
+target_position = Vector3(0, 0, -1000)
+
+[node name="Climb" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=201126113]
+target_position = Vector3(0, 0, 0)
+collision_mask = 16
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1528224476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -206,33 +224,12 @@ parent = NodePath("../..")
 
 [node name="Crouching" type="Node" parent="Scripts" unique_id=294985353]
 
+[node name="FPS Robot Arms" parent="." unique_id=940849563 instance=ExtResource("18_hnuln")]
+
 [node name="TestRotation" type="Node3D" parent="." unique_id=1069942047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94567436, 0)
 
 [node name="Test Pole" type="MeshInstance3D" parent="TestRotation" unique_id=1256078578]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.7725426)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.635188)
 mesh = SubResource("CylinderMesh_hnuln")
 skeleton = NodePath("../..")
-
-[node name="ClimbingPivot" type="Node3D" parent="." unique_id=1488042081]
-unique_name_in_owner = true
-
-[node name="Neck" type="Node3D" parent="ClimbingPivot" unique_id=1849357523]
-
-[node name="CameraSpring" type="Node3D" parent="ClimbingPivot/Neck" unique_id=352748935]
-script = ExtResource("13_06tpx")
-angular_displacement = 3.0
-linear_displacement = 0.1
-
-[node name="CameraLean" type="Node3D" parent="ClimbingPivot/Neck/CameraSpring" unique_id=768575197]
-script = ExtResource("14_7g0yx")
-
-[node name="Camera3D" type="Camera3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean" unique_id=58166968]
-
-[node name="PlayerAim" type="RayCast3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
-target_position = Vector3(0, 0, -1000)
-
-[node name="Climb" type="RayCast3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D" unique_id=201126113]
-target_position = Vector3(0, 0, 0)
-collision_mask = 16
-
-[node name="FPS Robot Arms" parent="ClimbingPivot" unique_id=940849563 instance=ExtResource("18_hnuln")]

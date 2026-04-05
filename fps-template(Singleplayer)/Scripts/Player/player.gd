@@ -24,6 +24,8 @@ class_name Player extends CharacterBody3D
 @export var basic_movement: BasicMovement
 @export var climbing_movement: ClimbingMovement
 
+@export var test_rotation: Node3D
+@export var climbing_pivot: Node3D
 
 var health: Health
 var animation_player: AnimationPlayer
@@ -149,6 +151,15 @@ func check_can_climb():
 func enter_climb():
 	if climbing_movement:
 		climbing_movement.enter_climb()
+		var wall = climbing_ray.get_collider()
+		var wall_normal = climbing_ray.get_collision_normal()
+		var forward = -wall_normal
+		forward = forward.normalized()
+		test_rotation.look_at(position - wall_normal)
+		%ClimbingPivot.look_at(position - wall_normal)
+		neck.rotation = Vector3.ZERO
+		
+		
 
 
 func set_climbing_offset():

@@ -21,11 +21,10 @@ func enter_climb():
 	var wall_normal = parent.climbing_ray.get_collision_normal()
 	var forward = -wall_normal
 	forward = forward.normalized()
-	
-	var basis = Basis()
-	basis = basis.looking_at(forward)
-	parent.basis = basis
-	
+	parent.test_rotation.look_at(parent.position - wall_normal)
+	parent.climbing_pivot.look_at(parent.position - wall_normal)
+	parent.neck.rotation = Vector3.ZERO
+		
 	parent.climbing_ray.reparent(parent)
 	return forward
 
@@ -70,7 +69,6 @@ func climb_move(delta: float) -> void:
 		move_dir = Vector3.ZERO
 
 	parent.velocity = move_dir 
-	print(parent.velocity)
 	parent.move_and_slide()
 
 
@@ -96,7 +94,7 @@ func get_average_normal() -> Vector3:
 
 
 func exit_climb():
-	parent.rotation = Vector3.ZERO
+	parent.climbing_pivot.rotation = Vector3.ZERO
 	parent.climbing_ray.reparent(parent.camera)
 	parent.climbing_ray.rotation = Vector3.ZERO
 	parent.climbing_ray.position = Vector3.ZERO

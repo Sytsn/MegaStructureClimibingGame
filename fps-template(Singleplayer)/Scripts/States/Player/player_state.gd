@@ -54,6 +54,8 @@ func ui_inputs():
 	if Input.is_action_just_released("ui_cancel") and not player.is_paused:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		player.is_paused = true
+		get_tree().paused = true
 	elif Input.is_action_just_released("ui_cancel") and player.is_paused:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player.is_paused = false
+		get_tree().paused = false

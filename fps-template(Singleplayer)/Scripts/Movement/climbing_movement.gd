@@ -19,14 +19,8 @@ func enter_climb():
 	parent.fps_arms.enable_ik()
 	var wall = parent.climbing_ray.get_collider()
 	var wall_normal = parent.climbing_ray.get_collision_normal()
-	var forward = -wall_normal
-	forward = forward.normalized()
-	parent.test_rotation.look_at(parent.position - wall_normal)
-	parent.climbing_pivot.look_at(parent.position - wall_normal)
-	parent.neck.rotation = Vector3.ZERO
-		
+	orient_player(wall_normal)
 	parent.climbing_ray.reparent(parent)
-	return forward
 
 
 func set_climbing_offset():
@@ -36,6 +30,12 @@ func set_climbing_offset():
 	var dist = to_plane.dot(wall_normal)
 	var correction = (parent.player_res.wall_player_offset - dist) * wall_normal
 	parent.global_position += correction
+
+
+func orient_player(wall_normal):
+	parent.test_rotation.look_at(parent.position - wall_normal)
+	parent.climbing_pivot.look_at(parent.position - wall_normal)
+	parent.neck.rotation = Vector3.ZERO
 
 
 func climb_move(delta: float) -> void:
@@ -55,6 +55,8 @@ func climb_move(delta: float) -> void:
 
 	# Get wall info
 	var wall_normal: Vector3 = get_average_normal()
+	#orient_player(wall_normal)
+	print("wall norma;", wall_normal)
 	var v = get_wall_space_vectors(wall_normal)
 	var wall_up    = v["up"]
 	var wall_right = v["right"]
@@ -94,7 +96,9 @@ func get_average_normal() -> Vector3:
 
 
 func exit_climb():
+	var keep_neck_rotation = parent.neck.global_rotation.y
 	parent.climbing_pivot.rotation = Vector3.ZERO
+	parent.neck.rotation.y = keep_neck_rotation
 	parent.climbing_ray.reparent(parent.camera)
 	parent.climbing_ray.rotation = Vector3.ZERO
 	parent.climbing_ray.position = Vector3.ZERO

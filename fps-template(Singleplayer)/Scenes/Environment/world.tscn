@@ -159,6 +159,39 @@ collision_layer = 17
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D6/StaticBody3D" unique_id=413064052]
 shape = SubResource("ConvexPolygonShape3D_lrwwn")
 
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="." unique_id=9172424]
+transform = Transform3D(6.2895536, 0, 0, 0, 16.369081, 0, 0, 0, -4.83645, 29.716108, 6.73353, -12.031464)
+layers = 16
+mesh = SubResource("BoxMesh_lrwwn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D9" unique_id=1731613757]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D9/StaticBody3D" unique_id=807112573]
+shape = SubResource("ConvexPolygonShape3D_lrwwn")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="." unique_id=163271070]
+transform = Transform3D(5.6926956, 0, 3.969284, 0, 16.369081, 0, 6.5256596, 0, -3.4626272, 33.460266, 6.73353, -9.737094)
+layers = 16
+mesh = SubResource("BoxMesh_lrwwn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D10" unique_id=188545183]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D10/StaticBody3D" unique_id=1566998983]
+shape = SubResource("ConvexPolygonShape3D_lrwwn")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="." unique_id=1208007469]
+transform = Transform3D(-2.557991, 0, 4.4183855, 0, 16.36908, 0, 5.745882, 0, 1.9670072, 35.199364, 6.73353, -5.713793)
+layers = 16
+mesh = SubResource("BoxMesh_lrwwn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D11" unique_id=2105621062]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D11/StaticBody3D" unique_id=408387542]
+shape = SubResource("ConvexPolygonShape3D_lrwwn")
+
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="." unique_id=1202970552]
 transform = Transform3D(5.8270383, 0, -1.8203719, 0, 16.369081, 0, -2.3672996, 0, -4.480792, -10.559064, 6.73353, -13.010214)
 layers = 16

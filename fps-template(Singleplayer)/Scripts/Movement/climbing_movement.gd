@@ -33,7 +33,6 @@ func set_climbing_offset():
 
 
 func orient_player(wall_normal):
-	parent.test_rotation.look_at(parent.position - wall_normal)
 	parent.climbing_pivot.look_at(parent.position - wall_normal)
 	parent.neck.rotation = Vector3.ZERO
 

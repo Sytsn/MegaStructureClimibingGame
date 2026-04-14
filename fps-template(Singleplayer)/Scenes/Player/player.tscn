@@ -25,12 +25,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gk6dx"]
 height = 1.0
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_hnuln"]
-top_radius = 0.01
-bottom_radius = 0.1
-height = 1.0
-
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "climbing_ray", "low_climbing_rays_array", "mid_climbing_rays_array", "high_climbing_rays_array", "basic_movement", "climbing_movement", "test_rotation", "climbing_pivot")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "climbing_ray", "low_climbing_rays_array", "mid_climbing_rays_array", "high_climbing_rays_array", "basic_movement", "climbing_movement", "climbing_pivot")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
 player_settings_res = ExtResource("3_r5xpd")
@@ -50,7 +45,6 @@ mid_climbing_rays_array = [NodePath("ClimbingRays/Mid/Forward"), NodePath("Climb
 high_climbing_rays_array = [NodePath("ClimbingRays/High/Forward"), NodePath("ClimbingRays/High/Left"), NodePath("ClimbingRays/High/Right"), NodePath("ClimbingRays/High/F+L"), NodePath("ClimbingRays/High/F+R"), NodePath("ClimbingRays/High/Backward"), NodePath("ClimbingRays/High/B+L"), NodePath("ClimbingRays/High/B+R")]
 basic_movement = NodePath("Scripts/BasicMovement")
 climbing_movement = NodePath("Scripts/Climbing")
-test_rotation = NodePath("TestRotation")
 climbing_pivot = NodePath("ClimbingPivot")
 
 [node name="PlayerUI" parent="." unique_id=2081950460 node_paths=PackedStringArray("player") instance=ExtResource("9_gk6dx")]
@@ -205,13 +199,6 @@ script = ExtResource("17_ks1b7")
 parent = NodePath("../..")
 
 [node name="Crouching" type="Node" parent="Scripts" unique_id=294985353]
-
-[node name="TestRotation" type="Node3D" parent="." unique_id=1069942047]
-
-[node name="Test Pole" type="MeshInstance3D" parent="TestRotation" unique_id=1256078578]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.7725426)
-mesh = SubResource("CylinderMesh_hnuln")
-skeleton = NodePath("../..")
 
 [node name="ClimbingPivot" type="Node3D" parent="." unique_id=1488042081]
 unique_name_in_owner = true

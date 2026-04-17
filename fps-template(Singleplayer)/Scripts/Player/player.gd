@@ -137,6 +137,7 @@ func exit_crouch():
 
 
 func check_can_climb():
+	print(climbing_ray.is_colliding())
 	if !player_res.climb_abilitity:
 		return false
 	if !climbing_ray.is_colliding():

@@ -55,7 +55,6 @@ func climb_move(delta: float) -> void:
 	# Get wall info
 	var wall_normal: Vector3 = get_average_normal()
 	#orient_player(wall_normal)
-	print("wall norma;", wall_normal)
 	var v = get_wall_space_vectors(wall_normal)
 	var wall_up    = v["up"]
 	var wall_right = v["right"]
@@ -68,7 +67,7 @@ func climb_move(delta: float) -> void:
 		move_dir = move_dir.normalized() * climb_speed
 	else:
 		move_dir = Vector3.ZERO
-
+	
 	parent.velocity = move_dir 
 	parent.move_and_slide()
 

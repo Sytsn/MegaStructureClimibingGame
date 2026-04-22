@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerSettingsRes" format=3 uid="uid://c16j7vh5qe1wv"]
+
+[ext_resource type="Script" uid="uid://bt4y22fvkm37o" path="res://Resources/Scripts/player_settings_res.gd" id="1_dklg2"]
+
+[resource]
+script = ExtResource("1_dklg2")
+camera_lean_enabled = true
+metadata/_custom_type_script = "uid://bt4y22fvkm37o"

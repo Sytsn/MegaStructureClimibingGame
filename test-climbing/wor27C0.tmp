@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdjew2mkdf7wh"]
+
+[ext_resource type="Texture2D" uid="uid://bwcrty03vo3" path="res://icon.svg" id="1_0sv7v"]
+[ext_resource type="PackedScene" uid="uid://j6nprcmad81r" path="res://player.tscn" id="1_0too2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbn82"]
+albedo_texture = ExtResource("1_0sv7v")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dd5v6"]
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6r7w8"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.800365, -0.160011, 0.577765, -0.599513, -0.213619, 0.771331, 0, -0.963724, -0.266902, 2.16355, 5.45284, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_fbn82")
+mesh = SubResource("PlaneMesh_dd5v6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_6r7w8")
+
+[node name="Player" parent="." node_paths=PackedStringArray("twist_pivot", "pitch_pivot") instance=ExtResource("1_0too2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.14152, 0)
+twist_pivot = NodePath("TwistPivot")
+pitch_pivot = NodePath("TwistPivot/PitchPivot")
+
+[node name="TwistPivot" type="Node3D" parent="Player"]
+
+[node name="PitchPivot" type="Node3D" parent="Player/TwistPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/TwistPivot/PitchPivot"]

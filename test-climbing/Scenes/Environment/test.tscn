@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bvkbdjeeyhvlg"]
+
+[ext_resource type="PackedScene" uid="uid://n1bmpmajeq05" path="res://Scenes/Player/player.tscn" id="1_cscyc"]
+[ext_resource type="Texture2D" uid="uid://bwcrty03vo3" path="res://icon.svg" id="2_nc4aa"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cscyc"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_nc4aa"]
+sky_material = SubResource("ProceduralSkyMaterial_cscyc")
+
+[sub_resource type="Environment" id="Environment_80ipc"]
+background_mode = 2
+sky = SubResource("Sky_nc4aa")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80ipc"]
+albedo_texture = ExtResource("2_nc4aa")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_66b0f"]
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qvr20"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[node name="Node3D" type="Node3D" unique_id=1896056851]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2006786223]
+environment = SubResource("Environment_80ipc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1382120087]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 1.0
+
+[node name="Player" parent="." unique_id=1139482985 instance=ExtResource("1_cscyc")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=212379376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+material_override = SubResource("StandardMaterial3D_80ipc")
+mesh = SubResource("PlaneMesh_66b0f")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=175855450]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1918348765]
+shape = SubResource("ConcavePolygonShape3D_qvr20")

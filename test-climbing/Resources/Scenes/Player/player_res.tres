@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerRes" format=3 uid="uid://g31nmw7wil4"]
+
+[ext_resource type="Script" uid="uid://bobm0qrvdx388" path="res://Resources/Scripts/player_res.gd" id="1_rh5lk"]
+
+[resource]
+script = ExtResource("1_rh5lk")
+camera_pos = Vector3(0, 1.15, 0)
+climb_speed = 7.0
+climb_abilitity = true
+metadata/_custom_type_script = "uid://bobm0qrvdx388"

@@ -32,8 +32,9 @@ class_name PlayerRes extends Resource
 @export var slide_friction: float = 1.0
 @export var slide_threshold: float = 20.0
 
-@export_category("Mouse")
+@export_category("Look")
 @export var mouse_sens: float = 0.001
+@export var game_pad_sens: float = 0.01
 
 @export_category("PlayerAbilities")
 @export var climb_abilitity: bool

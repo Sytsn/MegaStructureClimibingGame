@@ -24,21 +24,21 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gk6dx"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "climbing_ray", "climbing_offset_ray", "basic_movement", "climbing_movement")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "climbing_ray", "climbing_pivot", "basic_movement", "climbing_movement")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
 player_settings_res = ExtResource("3_r5xpd")
-neck = NodePath("Neck")
-camera = NodePath("Neck/CameraSpring/CameraLean/Camera3D")
+neck = NodePath("ClimbingPivot/Neck")
+camera = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D")
 collider = NodePath("CollisionShape3D")
 is_multiplayer = false
 crouch_shape_cast = NodePath("ShapeCast3D")
 health_res = ExtResource("3_74mp2")
-player_aim_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
-camera_spring = NodePath("Neck/CameraSpring")
-camera_lean = NodePath("Neck/CameraSpring/CameraLean")
-climbing_ray = NodePath("Neck/CameraSpring/CameraLean/Camera3D/Climb")
-climbing_offset_ray = NodePath("ClimbingOffset")
+player_aim_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/PlayerAim")
+camera_spring = NodePath("ClimbingPivot/Neck/CameraSpring")
+camera_lean = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean")
+climbing_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/Climb")
+climbing_pivot = NodePath("ClimbingPivot")
 basic_movement = NodePath("Scripts/BasicMovement")
 climbing_movement = NodePath("Scripts/Climbing")
 
@@ -92,63 +92,62 @@ player = NodePath("../..")
 
 [node name="Crouching" type="Node" parent="Scripts" unique_id=294985353]
 
-[node name="Neck" type="Node3D" parent="." unique_id=1849357523]
+[node name="ClimbingPivot" type="Node3D" parent="." unique_id=881638506]
 
-[node name="CameraSpring" type="Node3D" parent="Neck" unique_id=352748935]
-script = ExtResource("13_06tpx")
-angular_displacement = 3.0
-linear_displacement = 0.1
-
-[node name="CameraLean" type="Node3D" parent="Neck/CameraSpring" unique_id=768575197]
-script = ExtResource("14_7g0yx")
-
-[node name="Camera3D" type="Camera3D" parent="Neck/CameraSpring/CameraLean" unique_id=58166968]
-
-[node name="PlayerAim" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
-target_position = Vector3(0, 0, -1000)
-
-[node name="Climb" type="RayCast3D" parent="Neck/CameraSpring/CameraLean/Camera3D" unique_id=201126113]
-target_position = Vector3(0, 0, 0)
-collision_mask = 16
-
-[node name="ClimbingOffset" type="RayCast3D" parent="." unique_id=1138033182]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-target_position = Vector3(0, 0, -5)
-
-[node name="ClimbingContainer" type="Node3D" parent="." unique_id=545488477]
+[node name="ClimbingContainer" type="Node3D" parent="ClimbingPivot" unique_id=545488477]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Forward" type="RayCast3D" parent="ClimbingContainer" unique_id=793723607]
+[node name="Forward" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=793723607]
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="Left" type="RayCast3D" parent="ClimbingContainer" unique_id=819282110]
+[node name="Left" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=819282110]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="F+L" type="RayCast3D" parent="ClimbingContainer" unique_id=2032111122]
+[node name="F+L" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=2032111122]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="F+R" type="RayCast3D" parent="ClimbingContainer" unique_id=2056596425]
+[node name="F+R" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=2056596425]
 transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="Backward" type="RayCast3D" parent="ClimbingContainer" unique_id=200461038]
+[node name="Backward" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=200461038]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="B+L" type="RayCast3D" parent="ClimbingContainer" unique_id=1034604722]
+[node name="B+L" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=1034604722]
 transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 16
 
-[node name="B+R" type="RayCast3D" parent="ClimbingContainer" unique_id=1752557281]
+[node name="B+R" type="RayCast3D" parent="ClimbingPivot/ClimbingContainer" unique_id=1752557281]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
 target_position = Vector3(0, 0, -1.5)
+collision_mask = 16
+
+[node name="Neck" type="Node3D" parent="ClimbingPivot" unique_id=1849357523]
+
+[node name="CameraSpring" type="Node3D" parent="ClimbingPivot/Neck" unique_id=352748935]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1920929e-07, 0)
+script = ExtResource("13_06tpx")
+angular_displacement = 3.0
+linear_displacement = 0.1
+
+[node name="CameraLean" type="Node3D" parent="ClimbingPivot/Neck/CameraSpring" unique_id=768575197]
+script = ExtResource("14_7g0yx")
+
+[node name="Camera3D" type="Camera3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean" unique_id=58166968]
+
+[node name="PlayerAim" type="RayCast3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D" unique_id=110277990]
+target_position = Vector3(0, 0, -1000)
+
+[node name="Climb" type="RayCast3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D" unique_id=201126113]
+target_position = Vector3(0, 0, 0)
 collision_mask = 16

@@ -11,7 +11,6 @@ const CLIMBING = "Climbing"
 var player: Player
 
 var mouse_look := Vector2.ZERO
-@export var look_sens_mouse := 0.002
 @export var look_sens_pad := .01
 
 func _ready() -> void:
@@ -75,8 +74,8 @@ func update_look(delta: float) -> void:
 
 	var stick_look := Input.get_vector("look_left", "look_right", "look_up", "look_down")
 	var look := Vector2(
-		mouse_look.x * look_sens_mouse + stick_look.x * look_sens_pad,
-		mouse_look.y * look_sens_mouse + stick_look.y * look_sens_pad
+		mouse_look.x * player.player_res.mouse_sens + stick_look.x * player.player_res.game_pad_sens,
+		mouse_look.y * player.player_res.mouse_sens + stick_look.y * player.player_res.game_pad_sens
 	)
 
 	player.neck.rotate_y(-look.x)

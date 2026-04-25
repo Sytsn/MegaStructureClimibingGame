@@ -20,3 +20,7 @@ func physics_update(delta: float) -> void:
 		#finished.emit(SPRINTING)
 	#elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_forward" ) or Input.is_action_pressed("move_back"):
 		#finished.emit(WALKING)
+
+
+func exit() -> void:
+	player.climbing_movement.exit_climb()

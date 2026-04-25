@@ -14,9 +14,9 @@ class_name Player extends CharacterBody3D
 @export var camera_lean: CameraLean
 @export var fps_arms: FPSArms
 
-@export_category("Climbing Rays")
+@export_category("Climbing")
 @export var climbing_ray: RayCast3D
-@export var climbing_offset_ray: RayCast3D
+@export var climbing_pivot: Node3D
 
 @export_category("MovementScripts")
 @export var basic_movement: BasicMovement

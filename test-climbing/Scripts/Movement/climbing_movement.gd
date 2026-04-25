@@ -5,6 +5,7 @@ class_name ClimbingMovement extends Node
 
 var wall_normal: Vector3
 var wall_hit: Vector3
+var wall_up: Vector3
 
 
 func check_can_climb():
@@ -23,6 +24,10 @@ func set_climbing_offset():
 	player.global_position = target_point
 
 
+func exit_climb():
+	player.climbing_pivot.global_transform.basis = player.global_transform.basis
+
+
 func climb_move():
 	var forward = Input.get_action_strength("move_forward")
 	var backward = Input.get_action_strength("move_back")
@@ -30,13 +35,14 @@ func climb_move():
 	var right = Input.get_action_strength("move_right")
 	
 	set_average_normal()
+	update_climbing_orientation()
 	
 	var wall_right = Vector3.UP.cross(wall_normal.normalized()).normalized()
 	
 	var input_forward = forward - backward
 	var input_right   = right   - left
 	
-	var move_dir = (Vector3.UP * input_forward) + (wall_right * input_right)
+	var move_dir = (wall_up * input_forward) + (wall_right * input_right)
 	var climb_speed = 5.0
 	
 	if move_dir.length() > 0.001:
@@ -48,9 +54,9 @@ func climb_move():
 	player.move_and_slide()
 
 
-func update_wall_normal():
-	wall_hit = player.climbing_offset_ray.get_collision_point()
-	wall_normal = player.climbing_offset_ray.get_collision_normal()
+func update_wall_up():
+	var world_up = Vector3.UP
+	wall_up = (world_up - world_up.project(wall_normal.normalized())).normalized()
 
 
 func set_average_normal():
@@ -69,4 +75,9 @@ func set_average_normal():
 	var average_hit = total_hit_points / total_hits
 	wall_normal = average_normal
 	wall_hit = average_hit
-	
+	update_wall_up()
+
+
+func update_climbing_orientation() -> void:
+	var tilt_basis = Basis().looking_at(-wall_normal, wall_up).orthonormalized()
+	player.climbing_pivot.global_transform.basis = tilt_basis

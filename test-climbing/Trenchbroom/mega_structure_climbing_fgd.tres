@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDFile" format=3 uid="uid://b6drl1jua2pty"]
+
+[ext_resource type="Resource" uid="uid://crgpdahjaj" path="res://addons/func_godot/fgd/func_godot_fgd.tres" id="1_pkowh"]
+[ext_resource type="Resource" uid="uid://dhhafrk47sht0" path="res://Trenchbroom/fgd/point/func_light.tres" id="2_ibx0w"]
+[ext_resource type="Script" uid="uid://drlmgulwbjwqu" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="2_jgv3e"]
+
+[resource]
+script = ExtResource("2_jgv3e")
+base_fgd_files = Array[Resource]([ExtResource("1_pkowh")])
+entity_definitions = Array[Resource]([ExtResource("2_ibx0w")])
+metadata/_custom_type_script = "uid://drlmgulwbjwqu"

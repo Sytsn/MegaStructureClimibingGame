@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://blavfqofdop7g"
+path="res://.godot/imported/unnamed.5.map-2b58878604d9e0e8ae959fb1ed11616c.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/Maps/autosave/unnamed.5.map"
+dest_files=["res://.godot/imported/unnamed.5.map-2b58878604d9e0e8ae959fb1ed11616c.tres"]
+
+[params]
+

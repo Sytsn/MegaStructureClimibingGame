@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bkr00ine5222o"]
+
+[ext_resource type="Script" uid="uid://dwuv2d6mufpyo" path="res://Scripts/Movement/climbing_movement.gd" id="1_camvi"]
+
+[node name="Climbing" type="Node" unique_id=2136826515]
+script = ExtResource("1_camvi")

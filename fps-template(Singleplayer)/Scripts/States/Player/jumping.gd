@@ -9,5 +9,5 @@ func physics_update(delta: float) -> void:
 
 	if player.velocity.y >= 0:
 		finished.emit(FALLING)
-	if Input.is_action_pressed("climb_action") and player.check_can_climb():
-		finished.emit(CLIMBING)
+	if player.check_climbing_state_enter():
+			finished.emit(CLIMBING)

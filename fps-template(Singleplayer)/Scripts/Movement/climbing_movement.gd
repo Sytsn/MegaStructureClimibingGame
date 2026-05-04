@@ -1,123 +1,142 @@
 class_name ClimbingMovement extends Node
 
 
-@export var parent: Player
+var player: Player
 
+var wall_normal: Vector3
+var wall_hit: Vector3
+var wall_up: Vector3
+
+var is_low_colliding: bool 
+var is_high_colliding: bool
 
 func check_can_climb():
-	if !parent.player_res.climb_abilitity:
-		return false
-	if !parent.climbing_ray.is_colliding():
-		return false
-	else:
+	if player.climbing_ray.is_colliding():
 		return true
-
-# This is broken when climbing in a NON -Z facing direction. This is probably because how I am doing this, so before I move on I will blow this up. 
-# But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the parent not just forward. WE DO NOT WANT TO ROTATE THE parent ALONG THE Y AXIS
-# The parent can tilt but should not spin, that causes issues.
-func enter_climb():
-	parent.fps_arms.enable_ik()
-	var wall = parent.climbing_ray.get_collider()
-	var wall_normal = parent.climbing_ray.get_collision_normal()
-	orient_player(wall_normal)
-	parent.climbing_ray.reparent(parent)
+	return false
 
 
 func set_climbing_offset():
-	var wall_normal = parent.climbing_ray.get_collision_normal()
-	var wall_point = parent.climbing_ray.get_collision_point()
-	var to_plane = parent.global_position - wall_point
-	var dist = to_plane.dot(wall_normal)
-	var correction = (parent.player_res.wall_player_offset - dist) * wall_normal
-	parent.global_position += correction
+	set_average_normal()
+	var wall_offset := 1.0
+	var target_point = wall_hit + (wall_normal.normalized() * wall_offset)
+	if is_nan(target_point.x) or is_nan(target_point.y) or is_nan(target_point.z):
+		print("Target is Nan")
+		return
+	player.global_position = target_point
 
 
-func orient_player(wall_normal):
-	parent.climbing_pivot.look_at(parent.position - wall_normal)
-	parent.neck.rotation = Vector3.ZERO
+func exit_climb():
+	player.climbing_pivot.global_transform.basis = player.global_transform.basis
 
 
-func climb_move(delta: float) -> void:
-	# Get input
-	var forward = Input.get_action_strength("move_forward")
-	var backward = Input.get_action_strength("move_back")
-	var left = Input.get_action_strength("move_left")
-	var right = Input.get_action_strength("move_right")
+func climb_move():
+	var can_climb = check_climbing_bounds()
+	var forward: float
+	var backward: float
+	var left: float
+	var right: float
 	
-	if parent.is_on_floor():
-		backward = 0.0
-	if !parent.climbing_ray.is_colliding():
-		forward = 0.0
+	if can_climb["high"] and !player.is_on_ceiling(): 
+		forward = Input.get_action_strength("move_forward")
+	if can_climb["low"] and !player.is_on_floor():
+		backward = Input.get_action_strength("move_back")
+	if can_climb["left"]:
+		left = Input.get_action_strength("move_left")
+	if can_climb["right"]:
+		right = Input.get_action_strength("move_right")
+	
+	var wall_right = Vector3.UP.cross(wall_normal.normalized()).normalized()
 	
 	var input_forward = forward - backward
 	var input_right   = right   - left
-
-	# Get wall info
-	var wall_normal: Vector3 = get_average_normal()
-	#orient_player(wall_normal)
-	var v = get_wall_space_vectors(wall_normal)
-	var wall_up    = v["up"]
-	var wall_right = v["right"]
-
-	# Build desired parent.velocity along the wall
-	var climb_speed = parent.player_res.climb_speed
+	
 	var move_dir = (wall_up * input_forward) + (wall_right * input_right)
-
+	var climb_speed = 5.0
+	
 	if move_dir.length() > 0.001:
 		move_dir = move_dir.normalized() * climb_speed
 	else:
 		move_dir = Vector3.ZERO
 	
-	parent.velocity = move_dir 
-	parent.move_and_slide()
+	player.velocity = move_dir 
+	player.move_and_slide()
 
 
-func get_average_normal() -> Vector3:
-	var total_normals = Vector3.ZERO
-	var total_hits = 0
-	
-	for ray in parent.low_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	for ray in parent.mid_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	for ray in parent.high_climbing_rays_array:
-		if ray.is_colliding():
-			total_normals += ray.get_collision_normal()
-			total_hits += 1
-	
-	var average_normal = total_normals / total_hits
-	return average_normal
-
-
-func exit_climb():
-	var keep_neck_rotation = parent.neck.global_rotation.y
-	parent.climbing_pivot.rotation = Vector3.ZERO
-	parent.neck.rotation.y = keep_neck_rotation
-	parent.climbing_ray.reparent(parent.camera)
-	parent.climbing_ray.rotation = Vector3.ZERO
-	parent.climbing_ray.position = Vector3.ZERO
-
-
-func get_wall_space_vectors(wall_normal: Vector3) -> Dictionary:
-	# Wall normal points out of the wall
-	var n = wall_normal.normalized()
-
-	# Choose a reference up. If the wall is near vertical, global up works.
+func update_wall_up():
 	var world_up = Vector3.UP
+	wall_up = (world_up - world_up.project(wall_normal.normalized())).normalized()
 
-	# "Up" along the wall: remove the component of world_up that points into the wall
-	# This gives a direction that is parallel to the wall surface.
-	var wall_up = (world_up - world_up.project(n)).normalized()
 
-	# "Right" along the wall (sideways tangent)
-	var wall_right = wall_up.cross(n).normalized()
+func set_average_normal():
+	is_low_colliding = false
+	is_high_colliding = false
+	var total_normal := Vector3.ZERO
+	var total_hit_points := Vector3.ZERO 
+	var total_hits := 0
+	
+	for ray in player.mid_climbing_rays_array:
+		if ray:
+			if ray.is_colliding():
+				var cur_normal = ray.get_collision_normal()
+				var cur_hit = ray.get_collision_point()
+				total_normal += cur_normal
+				total_hit_points += cur_hit
+				total_hits += 1
+	
+	if total_hits == 0:
+		# Prevent division by zero
+		is_low_colliding = false
+		is_high_colliding = false
+		return 
+	
+	var average_normal = total_normal / total_hits
+	var average_hit = total_hit_points / total_hits
+	wall_normal = average_normal
+	wall_hit = average_hit
+	set_left_right_container()
+	update_wall_up()
 
+
+func set_left_right_container():
+	var basis = Basis().looking_at(-wall_normal, wall_up).orthonormalized()
+	player.left_right_container.global_transform.basis = basis
+
+
+func update_climbing_orientation(enter_climb: bool = false) -> void:
+	if wall_up == Vector3.UP:
+		return
+	var tilt_basis = Basis().looking_at(-wall_normal, wall_up).orthonormalized()
+	player.climbing_pivot.global_transform.basis = tilt_basis
+	if enter_climb:
+		player.neck.rotation = Vector3.ZERO
+
+
+func check_climbing_bounds():
+	var is_low_colliding: bool = false
+	var is_high_colliding: bool = false
+	var is_left_colliding: bool = false
+	var is_right_colliding: bool = false
+	
+	for ray in player.low_climbing_rays_array:
+		if ray:
+			if ray.is_colliding():
+				is_low_colliding = true
+	for ray in player.high_climbing_rays_array:
+		if ray:
+			if ray.is_colliding():
+				is_high_colliding = true
+	for ray in player.left_climbing_rays_array:
+		if ray:
+			if ray.is_colliding():
+				is_left_colliding = true
+	for ray in player.right_climbing_rays_array:
+		if ray:
+			if ray.is_colliding():
+				is_right_colliding = true
 	return {
-		"up": wall_up,
-		"right": wall_right,
-		"normal": n,
+		"low": is_low_colliding,
+		"high": is_high_colliding,
+		"left": is_left_colliding,
+		"right": is_right_colliding
 	}

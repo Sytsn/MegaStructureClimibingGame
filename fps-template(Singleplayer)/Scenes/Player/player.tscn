@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://dgq3dbu5q0mtk" path="res://Scripts/Player/camera_spring.gd" id="13_06tpx"]
 [ext_resource type="Script" uid="uid://doj8y8fjj2j75" path="res://Scripts/Player/camera_lean.gd" id="14_7g0yx"]
 [ext_resource type="Script" uid="uid://gk6ehbk00oei" path="res://Scripts/Movement/basic_movement.gd" id="15_dey5f"]
-[ext_resource type="Script" uid="uid://dwuv2d6mufpyo" path="res://Scripts/Movement/climbing_movement.gd" id="17_ks1b7"]
 [ext_resource type="PackedScene" uid="uid://ckvpebmkhv0oe" path="res://Scenes/Player/Models/fps_robot_arms.tscn" id="18_hnuln"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pj3iw"]
@@ -25,7 +24,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gk6dx"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "climbing_ray", "low_climbing_rays_array", "mid_climbing_rays_array", "high_climbing_rays_array", "basic_movement", "climbing_movement", "climbing_pivot")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "interact_ray", "climbing_ray", "left_right_container", "basic_movement", "climbing_pivot")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
 player_settings_res = ExtResource("3_r5xpd")
@@ -39,12 +38,10 @@ player_aim_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/P
 camera_spring = NodePath("ClimbingPivot/Neck/CameraSpring")
 camera_lean = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean")
 fps_arms = NodePath("ClimbingPivot/FPS Robot Arms")
+interact_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/InteractRay")
 climbing_ray = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D/Climb")
-low_climbing_rays_array = [NodePath("ClimbingRays/Low/Forward"), NodePath("ClimbingRays/Low/Left"), NodePath("ClimbingRays/Low/Right"), NodePath("ClimbingRays/Low/F+L"), NodePath("ClimbingRays/Low/F+R"), NodePath("ClimbingRays/Low/Backward"), NodePath("ClimbingRays/Low/B+L"), NodePath("ClimbingRays/Low/B+R")]
-mid_climbing_rays_array = [NodePath("ClimbingRays/Mid/Forward"), NodePath("ClimbingRays/Mid/Left"), NodePath("ClimbingRays/Mid/Right"), NodePath("ClimbingRays/Mid/F+L"), NodePath("ClimbingRays/Mid/F+R"), NodePath("ClimbingRays/Mid/Backward"), NodePath("ClimbingRays/Mid/B+L"), NodePath("ClimbingRays/Mid/B+R")]
-high_climbing_rays_array = [NodePath("ClimbingRays/High/Forward"), NodePath("ClimbingRays/High/Left"), NodePath("ClimbingRays/High/Right"), NodePath("ClimbingRays/High/F+L"), NodePath("ClimbingRays/High/F+R"), NodePath("ClimbingRays/High/Backward"), NodePath("ClimbingRays/High/B+L"), NodePath("ClimbingRays/High/B+R")]
+left_right_container = NodePath("ClimbingPivot/ClimbingRays/LeftRightContainer")
 basic_movement = NodePath("Scripts/BasicMovement")
-climbing_movement = NodePath("Scripts/Climbing")
 climbing_pivot = NodePath("ClimbingPivot")
 
 [node name="PlayerUI" parent="." unique_id=2081950460 node_paths=PackedStringArray("player") instance=ExtResource("9_gk6dx")]
@@ -85,120 +82,11 @@ shape = SubResource("CapsuleShape3D_gk6dx")
 target_position = Vector3(0, 1.5, 0)
 debug_shape_custom_color = Color(0.7194535, 2.5509298e-06, 5.7756904e-07, 1)
 
-[node name="ClimbingRays" type="Node3D" parent="." unique_id=1243620242]
-
-[node name="Low" type="Node3D" parent="ClimbingRays" unique_id=425596528]
-
-[node name="Forward" type="RayCast3D" parent="ClimbingRays/Low" unique_id=1362793310]
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Backward" type="RayCast3D" parent="ClimbingRays/Low" unique_id=258285763]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Left" type="RayCast3D" parent="ClimbingRays/Low" unique_id=850177001]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Right" type="RayCast3D" parent="ClimbingRays/Low" unique_id=1761397674]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+L" type="RayCast3D" parent="ClimbingRays/Low" unique_id=459816797]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+L" type="RayCast3D" parent="ClimbingRays/Low" unique_id=1403158706]
-transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+R" type="RayCast3D" parent="ClimbingRays/Low" unique_id=1952467614]
-transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+R" type="RayCast3D" parent="ClimbingRays/Low" unique_id=2006700734]
-transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Mid" type="Node3D" parent="ClimbingRays" unique_id=1172110113]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="Forward" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=640630270]
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Left" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=61487683]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Right" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=313510443]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+L" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=1480638081]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+R" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=846640687]
-transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Backward" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=976243199]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+L" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=1029776966]
-transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+R" type="RayCast3D" parent="ClimbingRays/Mid" unique_id=1083110023]
-transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="High" type="Node3D" parent="ClimbingRays" unique_id=1581946257]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="Forward" type="RayCast3D" parent="ClimbingRays/High" unique_id=720535388]
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Left" type="RayCast3D" parent="ClimbingRays/High" unique_id=1134023533]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Right" type="RayCast3D" parent="ClimbingRays/High" unique_id=1787227026]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+L" type="RayCast3D" parent="ClimbingRays/High" unique_id=191049645]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="F+R" type="RayCast3D" parent="ClimbingRays/High" unique_id=1802599189]
-transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="Backward" type="RayCast3D" parent="ClimbingRays/High" unique_id=1028768695]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+L" type="RayCast3D" parent="ClimbingRays/High" unique_id=400603763]
-transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
-[node name="B+R" type="RayCast3D" parent="ClimbingRays/High" unique_id=1357957659]
-transform = Transform3D(-0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071067, 0, 0, 0)
-target_position = Vector3(0, 0, -1.1)
-
 [node name="Scripts" type="Node" parent="." unique_id=384385197]
 
 [node name="BasicMovement" type="Node" parent="Scripts" unique_id=2113414823 node_paths=PackedStringArray("parent")]
 script = ExtResource("15_dey5f")
 parent = NodePath("../..")
-
-[node name="Climbing" type="Node" parent="Scripts" unique_id=1868725216 node_paths=PackedStringArray("parent")]
-script = ExtResource("17_ks1b7")
-parent = NodePath("../..")
-
-[node name="Crouching" type="Node" parent="Scripts" unique_id=294985353]
 
 [node name="ClimbingPivot" type="Node3D" parent="." unique_id=1488042081]
 unique_name_in_owner = true
@@ -222,4 +110,107 @@ target_position = Vector3(0, 0, -1000)
 target_position = Vector3(0, 0, 0)
 collision_mask = 16
 
+[node name="InteractRay" type="RayCast3D" parent="ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D" unique_id=1042927271]
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+collide_with_areas = true
+
 [node name="FPS Robot Arms" parent="ClimbingPivot" unique_id=940849563 instance=ExtResource("18_hnuln")]
+
+[node name="ClimbingRays" type="Node3D" parent="ClimbingPivot" unique_id=1243620242]
+
+[node name="Low" type="Node3D" parent="ClimbingPivot/ClimbingRays" unique_id=425596528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="Ray" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=1362793310]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray2" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=696770149]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray3" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=2093888497]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray4" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=663373191]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray5" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=1615965919]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray6" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=1491586433]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray7" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=185457834]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray8" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Low" unique_id=437341212]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Mid" type="Node3D" parent="ClimbingPivot/ClimbingRays" unique_id=1172110113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Ray2" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=253818890]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray3" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=687007197]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray4" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=1498835387]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray5" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=1896218439]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray6" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=461288550]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray7" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=1533678490]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray8" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=1672615510]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/Mid" unique_id=640630270]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="High" type="Node3D" parent="ClimbingPivot/ClimbingRays" unique_id=1581946257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Ray" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=720535388]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray2" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=71825986]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray3" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=293076463]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray4" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=790711431]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray5" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=561675805]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray6" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=1561824254]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray7" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=333906946]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Ray8" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/High" unique_id=336273814]
+target_position = Vector3(0, 0, -1.1)
+
+[node name="LeftRightContainer" type="Node3D" parent="ClimbingPivot/ClimbingRays" unique_id=1745828135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Right" type="Node3D" parent="ClimbingPivot/ClimbingRays/LeftRightContainer" unique_id=1895236673]
+
+[node name="RayCast3D2" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/LeftRightContainer/Right" unique_id=1335044491]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+target_position = Vector3(0, 0, -1.1)
+
+[node name="Left" type="Node3D" parent="ClimbingPivot/ClimbingRays/LeftRightContainer" unique_id=1638440089]
+
+[node name="RayCast3D" type="RayCast3D" parent="ClimbingPivot/ClimbingRays/LeftRightContainer/Left" unique_id=327296120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+target_position = Vector3(0, 0, -1.1)

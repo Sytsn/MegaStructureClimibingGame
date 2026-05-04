@@ -13,18 +13,23 @@ class_name Player extends CharacterBody3D
 @export var camera_spring: CameraSpring
 @export var camera_lean: CameraLean
 @export var fps_arms: FPSArms
+@export var interact_ray: RayCast3D
 
 @export_category("Climbing Rays")
 @export var climbing_ray: RayCast3D
-@export var low_climbing_rays_array: Array[RayCast3D]
-@export var mid_climbing_rays_array: Array[RayCast3D]
-@export var high_climbing_rays_array: Array[RayCast3D]
+@export var left_right_container: Node3D
+var low_climbing_rays_array: Array[RayCast3D]
+var mid_climbing_rays_array: Array[RayCast3D]
+var high_climbing_rays_array: Array[RayCast3D]
+var left_climbing_rays_array: Array[RayCast3D]
+var right_climbing_rays_array: Array[RayCast3D]
+
 
 @export_category("MovementScripts")
 @export var basic_movement: BasicMovement
-@export var climbing_movement: ClimbingMovement
-
 @export var climbing_pivot: Node3D
+var climbing_movement: ClimbingMovement
+var has_climbing_upgrade: bool = false
 
 var health: Health
 var animation_player: AnimationPlayer
@@ -33,11 +38,28 @@ var is_paused = false
 var is_crouching = false
 var exiting_crouching = false
 var is_dead = false
+var cur_area_interactable = null
+var cur_interactable = null
 
 
 func _ready() -> void:
 	setup_player()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _process(delta: float) -> void:
+	interactable()
+	if Input.is_action_just_pressed("interact"):
+		if cur_interactable:
+			print("1")
+			cur_interactable.interact()
+		elif cur_area_interactable:
+			print("2")
+			cur_area_interactable.interact()
+		else:
+			print("3")
+			print(cur_interactable)
+			print(cur_area_interactable)
 
 
 #region Setup
@@ -67,8 +89,48 @@ func fps_arms_setup():
 	animation_player = fps_arms.find_child("AnimationPlayer")
 
 
+func climbing_movement_setup(climbing_script: ClimbingMovement):
+	climbing_movement = climbing_script
+	climbing_movement.player = self
+
+
 func climbing_rays_setup():
 	climbing_ray.target_position = global_transform.basis * player_res.climbing_ray_target_pos
+	var low = $ClimbingPivot/ClimbingRays/Low.get_children()
+	var mid = $ClimbingPivot/ClimbingRays/Mid.get_children()
+	var high = $ClimbingPivot/ClimbingRays/High.get_children()
+	var left = $ClimbingPivot/ClimbingRays/LeftRightContainer/Left.get_children()
+	var right = $ClimbingPivot/ClimbingRays/LeftRightContainer/Right.get_children()
+	
+	var ray_angle = 0
+	for child in low:
+		if child is RayCast3D:
+			low_climbing_rays_array.append(child)
+			child.rotation.y = deg_to_rad(ray_angle)
+			child.target_position = player_res.climbing_ray_target_pos
+			ray_angle += 360 / low.size()
+	ray_angle = 0
+	for child in mid:
+		if child is RayCast3D:
+			mid_climbing_rays_array.append(child)
+			child.rotation.y = deg_to_rad(ray_angle)
+			child.target_position = player_res.climbing_ray_target_pos
+			ray_angle += 360 / mid.size()
+	ray_angle = 0
+	for child in high:
+		if child is RayCast3D:
+			high_climbing_rays_array.append(child)
+			child.rotation.y = deg_to_rad(ray_angle)
+			child.target_position = player_res.climbing_ray_target_pos
+			ray_angle += 360 / high.size()
+	for child in left:
+		if child is RayCast3D:
+			left_climbing_rays_array.append(child)
+			child.target_position = player_res.climbing_ray_target_pos
+	for child in right:
+		if child is RayCast3D:
+			right_climbing_rays_array.append(child)
+			child.target_position = player_res.climbing_ray_target_pos
 
 #endregion
 
@@ -133,53 +195,6 @@ func exit_crouch():
 #endregion
 
 
-#region Climbing
-
-
-func check_can_climb():
-	print(climbing_ray.is_colliding())
-	if !player_res.climb_abilitity:
-		return false
-	if !climbing_ray.is_colliding():
-		return false
-	else:
-		return true
-
-# This is broken when climbing in a NON -Z facing direction. This is probably because how I am doing this, so before I move on I will blow this up. 
-# But I am going to be using the array of rays now, I will need to update them to be ALL AROUND the player not just forward. WE DO NOT WANT TO ROTATE THE PLAYER ALONG THE Y AXIS
-# The player can tilt but should not spin, that causes issues.
-func enter_climb():
-	if climbing_movement:
-		climbing_movement.enter_climb()
-		var wall = climbing_ray.get_collider()
-		var wall_normal = climbing_ray.get_collision_normal()
-		var forward = -wall_normal
-		forward = forward.normalized()
-		%ClimbingPivot.look_at(position - wall_normal)
-		neck.rotation = Vector3.ZERO
-		
-		
-
-
-func set_climbing_offset():
-	if climbing_movement:
-		climbing_movement.set_climbing_offset()
-
-
-func climb_move(delta: float) -> void:
-	if climbing_movement:
-		climbing_movement.climb_move(delta)
-
-
-func exit_climb():
-	if climbing_movement:
-		climbing_movement.exit_climb()
-
-
-#endregion
-
-
-
 #region FPS Arms
 
 
@@ -188,6 +203,31 @@ func follow_camera():
 
 
 #endregion
+
+
+func interactable():
+	if interact_ray.is_colliding() and cur_interactable == null:
+		var res = interact_ray.get_collider()
+		if res is Node3D:
+			cur_interactable = res.get_parent()
+			print(cur_interactable)
+		if res is StaticBody3D:
+			cur_interactable = res
+	elif !interact_ray.is_colliding() and cur_interactable != null:
+		cur_interactable = null
+
+
+func check_climbing_state_enter():
+	if Input.is_action_pressed("climb_action") and check_has_climbing_upgrade():
+		if climbing_movement.check_can_climb():
+			return true
+	return false
+
+
+func check_has_climbing_upgrade():
+	if climbing_movement:
+		return true
+	return false
 
 
 func _on_death():

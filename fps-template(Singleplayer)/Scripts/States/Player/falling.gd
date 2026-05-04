@@ -6,8 +6,8 @@ func physics_update(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	player.air_move_player(delta, input_dir)
 
-	if Input.is_action_pressed("climb_action") and player.check_can_climb():
-		finished.emit(CLIMBING)
+	if player.check_climbing_state_enter():
+			finished.emit(CLIMBING)
 	if player.is_on_floor():
 		if is_equal_approx(input_dir.x, 0.0) && is_equal_approx(input_dir.y, 0.0):
 			finished.emit(IDLE)

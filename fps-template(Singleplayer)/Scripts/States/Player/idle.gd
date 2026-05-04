@@ -13,13 +13,13 @@ func physics_update(delta: float) -> void:
 
 	if not player.is_on_floor():
 		finished.emit(FALLING)
-	if Input.is_action_pressed("climb_action") and player.check_can_climb():
-		finished.emit(CLIMBING)
-	elif Input.is_action_just_pressed("jump") or (player.player_res.auto_bhop and Input.is_action_pressed("jump")):
+	if player.check_climbing_state_enter():
+			finished.emit(CLIMBING)
+	if Input.is_action_just_pressed("jump") or (player.player_res.auto_bhop and Input.is_action_pressed("jump")):
 		finished.emit(JUMPING)
-	elif Input.is_action_pressed("move_forward") and Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("move_forward") and Input.is_action_pressed("sprint"):
 		finished.emit(SPRINTING)
-	elif Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_forward" ) or Input.is_action_pressed("move_back"):
+	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_forward" ) or Input.is_action_pressed("move_back"):
 		finished.emit(WALKING)
 
 

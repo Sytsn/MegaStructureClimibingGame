@@ -12,8 +12,8 @@ func physics_update(delta: float) -> void:
 		slide_dir = Vector2(input_dir.x, -1 * floor_angle)
 	player.slide_player(delta, slide_dir, player.player_res.sprint_speed)
 	
-	if Input.is_action_pressed("climb_action") and player.check_can_climb():
-		finished.emit(CLIMBING)
+	if player.check_climbing_state_enter():
+			finished.emit(CLIMBING)
 	if not player.is_on_floor():
 		finished.emit(FALLING)
 	elif Input.is_action_just_pressed("jump") or (player.player_res.auto_bhop and Input.is_action_pressed("jump")):

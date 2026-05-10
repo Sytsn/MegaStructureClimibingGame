@@ -5,7 +5,7 @@ var is_locked: bool
 
 
 func interact():
-	if is_locked:
+	if !is_locked:
 		queue_free()
 
 

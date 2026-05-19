@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://kui2nxykalef"]
+
+[ext_resource type="Texture2D" uid="uid://0i3qrro4ehph" path="res://Trenchbroom/Textures/128x128/Stone/Horror_Stone_02-128x128.png" id="1_0g5xv"]
+
+[resource]
+albedo_texture = ExtResource("1_0g5xv")
+metallic_specular = 0.0
+texture_filter = 2

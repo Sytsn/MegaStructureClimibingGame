@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://d3w6dho0qst6w"]
+
+[ext_resource type="Script" uid="uid://5cow84q03m6a" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="1_oiskx"]
+
+[resource]
+script = ExtResource("1_oiskx")
+collision_layer = 17
+classname = "func_climable"
+description = "Adds Layer 5 to the collision "
+node_class = "StaticBody3D"
+metadata/_custom_type_script = "uid://5cow84q03m6a"

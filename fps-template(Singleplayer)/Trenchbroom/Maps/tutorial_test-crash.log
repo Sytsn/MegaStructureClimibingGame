@@ -1,0 +1,16 @@
+Adding file system path "D:\\GameDevTools\\TrenchBroom-Win64-AMD64-v2025.4-Release\\defaults\\assets"
+Adding file system path "D:\\Godot\\MegaStructureClimibingGame\\fps-template(Singleplayer)\\Trenchbroom\\"
+Loading document from D:\Godot\MegaStructureClimibingGame\fps-template(Singleplayer)\Trenchbroom\Maps\tutorial_test.map
+Found 0 shaders
+Loaded entity definition file FuncGodot.fgd
+Found 0 shaders
+Loaded "D:\\Godot\\MegaStructureClimibingGame\\fps-template(Singleplayer)\\Trenchbroom\\Maps\\tutorial_test.map" in 21ms
+Failed to load entity model 'hallway_rubble.glb': Trenchbroom\Models\Trenchbroom\Models\hallway_rubble.glb not found
+Reloading entity definitions
+Loaded entity definition file FuncGodot.fgd
+Reloading entity definitions
+Loaded entity definition file FuncGodot.fgd
+Reloading entity definitions
+Loaded entity definition file FuncGodot.fgd
+Reloading entity definitions
+Loaded entity definition file FuncGodot.fgd

@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://drlmgulwbjwqu" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="1_2ca4b"]
 [ext_resource type="Resource" uid="uid://crgpdahjaj" path="res://addons/func_godot/fgd/func_godot_fgd.tres" id="1_nlj3f"]
-[ext_resource type="Resource" uid="uid://d3w6dho0qst6w" path="res://Trenchbroom/fgd/solid/func_test.tres" id="1_sm0vh"]
+[ext_resource type="Resource" uid="uid://d3w6dho0qst6w" path="res://Trenchbroom/fgd/solid/func_climable.tres" id="2_ri2m7"]
 [ext_resource type="Resource" uid="uid://cohidko4adew0" path="res://Trenchbroom/fgd/solid/func_door.tres" id="3_3pmbq"]
+[ext_resource type="Resource" uid="uid://cfqm6mwmoihtx" path="res://Trenchbroom/fgd/solid/door_connection.tres" id="5_juhuj"]
 
 [resource]
 script = ExtResource("1_2ca4b")
 base_fgd_files = Array[Resource]([ExtResource("1_nlj3f")])
-entity_definitions = Array[Resource]([ExtResource("1_sm0vh"), ExtResource("3_3pmbq")])
+entity_definitions = Array[Resource]([ExtResource("2_ri2m7"), ExtResource("3_3pmbq"), ExtResource("5_juhuj")])
 metadata/_custom_type_script = "uid://drlmgulwbjwqu"

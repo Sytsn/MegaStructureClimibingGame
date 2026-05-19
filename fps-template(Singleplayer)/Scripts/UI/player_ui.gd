@@ -10,7 +10,6 @@ func _ready() -> void:
 	health_label = %Health
 	if get_tree().current_scene:
 		secondary_cam = get_tree().current_scene.get_node("Second Camera") as Camera3D
-	print(secondary_cam)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

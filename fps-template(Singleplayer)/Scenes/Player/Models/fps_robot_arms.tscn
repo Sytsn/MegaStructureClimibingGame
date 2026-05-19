@@ -124,7 +124,7 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.21
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.21235776, 0, 0.56966305)
 
 [node name="LPoleTarget" type="Marker3D" parent="." index="4" unique_id=217025016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7087079, 0, -0.55058694)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90592575, 0, 0.17084855)
 
 [node name="RPoleTarget" type="Marker3D" parent="." index="5" unique_id=573868523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709, 0, -0.551)

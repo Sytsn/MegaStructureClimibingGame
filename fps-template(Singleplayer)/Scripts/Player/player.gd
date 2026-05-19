@@ -85,9 +85,8 @@ func camera_setup():
 
 
 func fps_arms_setup():
-	pass
-	#fps_arms.global_position = camera.global_position
-	#animation_player = fps_arms.find_child("AnimationPlayer")
+	fps_arms.global_position = camera.global_position
+	animation_player = fps_arms.find_child("AnimationPlayer")
 
 
 func climbing_movement_setup(climbing_script: ClimbingMovement):
@@ -150,7 +149,7 @@ func air_move_player(delta: float, input_dir: Vector2):
 
 func slide_player(delta: float, input_dir: Vector2, speed: float):
 	if basic_movement:
-		basic_movement.stop_parent(delta)
+		basic_movement.slide_parent(delta, input_dir, speed)
 
 
 func stop_player(delta: float):
@@ -163,7 +162,7 @@ func stop_player(delta: float):
 	#climbing_ray_look_at()
 	
 	var acceleration := (velocity - prev_velocity) / delta
-	if PlayerSettings.player_settings_res.camera_lean_enabled:
+	if Global.player_settings_res.camera_lean_enabled:
 		camera_lean.update_lean(delta, acceleration, Vector3.UP)
 
 
@@ -184,6 +183,7 @@ func enter_crouch_ground():
 
 func  enter_crouch_air():
 	collider.scale.y = collider.scale.y / 2
+	is_crouching = true
 
 
 func exit_crouch():
@@ -199,7 +199,7 @@ func exit_crouch():
 
 
 func follow_camera():
-	#fps_arms.rotation = neck.rotation + Vector3(deg_to_rad(player_res.fps_arms_rot.x), deg_to_rad(player_res.fps_arms_rot.y), deg_to_rad(player_res.fps_arms_rot.z))
+	fps_arms.rotation = neck.rotation + Vector3(deg_to_rad(player_res.fps_arms_rot.x), deg_to_rad(player_res.fps_arms_rot.y), deg_to_rad(player_res.fps_arms_rot.z))
 	pass
 
 

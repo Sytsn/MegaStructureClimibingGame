@@ -63,3 +63,30 @@ func move_parent(delta: float, input_dir: Vector2, speed: float):
 	var acceleration := (parent.velocity - prev_velocity) / delta
 	if parent.player_settings_res.camera_lean_enabled:
 		parent.camera_lean.update_lean(delta, acceleration, Vector3.UP)
+
+
+func slide_parent(delta: float, input_dir: Vector2, speed: float):
+	var wish_dir = parent.neck.basis * Vector3(input_dir.x, 0.0, input_dir.y).normalized()
+	
+	var cur_speed_in_wish_dir = parent.velocity.dot(wish_dir)
+	var add_speed_till_cap = speed - cur_speed_in_wish_dir
+	if add_speed_till_cap > 0:
+		var accel_speed = parent.player_res.slide_accel * delta * speed
+		accel_speed = min(accel_speed, add_speed_till_cap)
+		parent.velocity += accel_speed * wish_dir
+	
+	var current_length = parent.velocity.length()
+	if current_length > speed:
+		var proj_speed = parent.velocity.dot(wish_dir)
+		var perp_speed = sqrt(current_length * current_length - proj_speed * proj_speed)
+		var new_length = min(current_length, speed)
+		parent.velocity = (proj_speed * wish_dir + 
+						  (parent.velocity - proj_speed * wish_dir).normalized() * perp_speed * (new_length / current_length))
+	
+	if input_dir.length() < 0.1:  # No input
+		var drop = current_length * parent.player_res.slide_friction * 0.5 * delta  # Halved
+		var new_speed = max(current_length - drop, 0.0)
+		if current_length > 0:
+			parent.velocity *= new_speed / current_length
+	
+	parent.move_and_slide()

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ggpt7bfxb8p"]
+
+[ext_resource type="PackedScene" uid="uid://dv2fcae0edeqn" path="res://Assets/Models/PointModelModels/hallway_rubble.glb" id="1_gxt70"]
+
+[node name="hallway_rubble" unique_id=1498882078 instance=ExtResource("1_gxt70")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="10" unique_id=665290194]

@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://bip8ed0l1pvar"
+path="res://.godot/imported/tutorial_test-crash.map-825f3712f06b3bec835d90cae5e722b8.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/Maps/tutorial_test-crash.map"
+dest_files=["res://.godot/imported/tutorial_test-crash.map-825f3712f06b3bec835d90cae5e722b8.tres"]
+
+[params]
+

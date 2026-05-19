@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerSettings="*uid://7pc2lkmio42h"
+Global="*uid://7pc2lkmio42h"
 
 [display]
 
@@ -32,6 +32,10 @@ window/vsync/vsync_mode=0
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/func_godot/plugin.cfg")
+
+[func_godot]
+
+model_point_class_save_path="Trenchbroom/Models/"
 
 [input]
 

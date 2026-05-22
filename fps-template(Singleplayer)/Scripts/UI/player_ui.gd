@@ -3,11 +3,14 @@ extends Control
 @export var player: Player
 var speed_label: RichTextLabel
 var health_label: RichTextLabel
+var interact: RichTextLabel
 var secondary_cam: Camera3D
 
 func _ready() -> void:
 	speed_label = %Speed
 	health_label = %Health
+	interact = %Interact
+	interact.visible = false
 	if get_tree().current_scene:
 		secondary_cam = get_tree().current_scene.get_node("Second Camera") as Camera3D
 
@@ -16,6 +19,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	speed_label.text = "Speed: " + str(player.velocity.length())
 	health_label.text = str(player.health.curr_health)
+	interact.visible = true if player.cur_interactable != null else false
 
 
 func _on_damage_pressed() -> void:

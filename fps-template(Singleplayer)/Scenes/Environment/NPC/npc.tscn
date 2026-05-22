@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://84wdta15qj1k"]
+
+[ext_resource type="Script" uid="uid://blggcqdcx5mcl" path="res://Scripts/Environment/NPC/npc.gd" id="1_oolgl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_675lp"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u4beo"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u4beo"]
+radius = 1.0
+
+[node name="NPC" type="Node3D" unique_id=726526542 node_paths=PackedStringArray("interact_script")]
+script = ExtResource("1_oolgl")
+interact_script = NodePath("InteractNode")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1989452394]
+mesh = SubResource("BoxMesh_675lp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1283039236]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1036183319]
+shape = SubResource("ConvexPolygonShape3D_u4beo")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1835719157]
+collision_layer = 9
+collision_mask = 9
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1847718226]
+shape = SubResource("SphereShape3D_u4beo")
+
+[node name="InteractNode" type="Node3D" parent="." unique_id=570097013]

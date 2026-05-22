@@ -1571,9 +1571,6 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 directional_shadow_max_distance = 1.0
 
-[node name="Player" parent="." unique_id=1139482985 instance=ExtResource("5_fhp08")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8584, -2.837613, 28.523422)
-
 [node name="FuncGodotMap" type="Node3D" parent="." unique_id=1245422899]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -24.452145)
 script = ExtResource("1_gpoed")
@@ -2418,3 +2415,6 @@ mesh = SubResource("ArrayMesh_26ugr")
 
 [node name="entity_50_brush_0_collision_shape" type="CollisionShape3D" parent="FuncGodotMap2/entity_50_func_door" unique_id=1715759602]
 shape = SubResource("ConvexPolygonShape3D_b0j84")
+
+[node name="Player" parent="." unique_id=1139482985 instance=ExtResource("5_fhp08")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7186676, 0.039986193, -26.618452)

@@ -1,15 +1,21 @@
-extends Control
+class_name PlayerUI extends Control
 
 @export var player: Player
 var speed_label: RichTextLabel
 var health_label: RichTextLabel
 var interact: RichTextLabel
 var secondary_cam: Camera3D
+var dialog_text: RichTextLabel
+var dialog_container: ColorRect
+
 
 func _ready() -> void:
 	speed_label = %Speed
 	health_label = %Health
 	interact = %Interact
+	dialog_text = %Dialog
+	dialog_container = %DialogContainer
+	dialog_container.visible = false
 	interact.visible = false
 	if get_tree().current_scene:
 		secondary_cam = get_tree().current_scene.get_node("Second Camera") as Camera3D
@@ -29,3 +35,16 @@ func _on_damage_pressed() -> void:
 	else:
 		secondary_cam.current = true
 		player.camera.current = false
+
+
+func set_dialog_text(text: String):
+	player.is_in_dialog = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	dialog_container.visible = true
+	dialog_text.text = text
+
+
+func exit_dialog_text():
+	player.is_in_dialog = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	dialog_container.visible = false

@@ -7,6 +7,7 @@ const JUMPING = "Jumping"
 const FALLING = "Falling"
 const SLIDING = "Sliding"
 const CLIMBING = "Climbing"
+const DIALOG = "Dialog"
 
 var player: Player
 

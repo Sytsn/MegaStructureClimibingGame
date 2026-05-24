@@ -2,6 +2,7 @@ class_name Player extends CharacterBody3D
 
 
 @export var player_res: PlayerRes
+@export var player_ui: PlayerUI
 @export var player_settings_res: PlayerSettingsRes
 @export var neck: Node3D
 @export var camera: Camera3D
@@ -40,6 +41,7 @@ var exiting_crouching = false
 var is_dead = false
 var cur_area_interactable = null
 var cur_interactable = null
+var is_in_dialog = false
 
 
 func _ready() -> void:
@@ -201,6 +203,21 @@ func exit_crouch():
 func follow_camera():
 	fps_arms.rotation = neck.rotation + Vector3(deg_to_rad(player_res.fps_arms_rot.x), deg_to_rad(player_res.fps_arms_rot.y), deg_to_rad(player_res.fps_arms_rot.z))
 	pass
+
+
+#endregion
+
+
+#region dialog
+
+
+func enter_dialog(dialog_text: String):
+	player_ui.set_dialog_text(dialog_text)
+
+
+func exit_dialog():
+	player_ui.exit_dialog_text()
+
 
 
 #endregion

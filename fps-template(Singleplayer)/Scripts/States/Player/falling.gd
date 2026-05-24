@@ -2,6 +2,8 @@ extends PlayerState
 
 func enter(previous_state_path: String, data := {}) -> void:
 	pass
+
+
 func physics_update(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	player.air_move_player(delta, input_dir)

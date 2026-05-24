@@ -11,6 +11,8 @@ func enter(previous_state_path: String, data := {}) -> void:
 func physics_update(delta: float) -> void:
 	player.stop_player(delta)
 
+	if player.is_in_dialog:
+		finished.emit(DIALOG)
 	if not player.is_on_floor():
 		finished.emit(FALLING)
 	if player.check_climbing_state_enter():

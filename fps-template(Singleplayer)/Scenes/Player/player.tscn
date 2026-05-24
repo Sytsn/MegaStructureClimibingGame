@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://boenqew4u7kej" path="res://Scripts/States/Player/climbing.gd" id="12_oikmp"]
 [ext_resource type="Script" uid="uid://dgq3dbu5q0mtk" path="res://Scripts/Player/camera_spring.gd" id="13_06tpx"]
 [ext_resource type="Script" uid="uid://doj8y8fjj2j75" path="res://Scripts/Player/camera_lean.gd" id="14_7g0yx"]
+[ext_resource type="Script" uid="uid://7gr4sijvupk3" path="res://Scripts/States/Player/dialog.gd" id="14_hnuln"]
 [ext_resource type="Script" uid="uid://gk6ehbk00oei" path="res://Scripts/Movement/basic_movement.gd" id="15_dey5f"]
 [ext_resource type="PackedScene" uid="uid://ckvpebmkhv0oe" path="res://Scenes/Player/Models/fps_robot_arms.tscn" id="17_ks1b7"]
 
@@ -24,9 +25,10 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gk6dx"]
 height = 1.0
 
-[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "interact_ray", "climbing_ray", "left_right_container", "basic_movement", "climbing_pivot")]
+[node name="Player" type="CharacterBody3D" unique_id=1139482985 node_paths=PackedStringArray("player_ui", "neck", "camera", "collider", "crouch_shape_cast", "player_aim_ray", "camera_spring", "camera_lean", "fps_arms", "interact_ray", "climbing_ray", "left_right_container", "basic_movement", "climbing_pivot")]
 script = ExtResource("1_qk52v")
 player_res = ExtResource("2_0u5uq")
+player_ui = NodePath("PlayerUI")
 player_settings_res = ExtResource("3_r5xpd")
 neck = NodePath("ClimbingPivot/Neck")
 camera = NodePath("ClimbingPivot/Neck/CameraSpring/CameraLean/Camera3D")
@@ -75,6 +77,9 @@ script = ExtResource("10_jhyir")
 
 [node name="Climbing" type="Node" parent="StateMachine" unique_id=471770964]
 script = ExtResource("12_oikmp")
+
+[node name="Dialog" type="Node" parent="StateMachine" unique_id=122818086]
+script = ExtResource("14_hnuln")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1528224476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

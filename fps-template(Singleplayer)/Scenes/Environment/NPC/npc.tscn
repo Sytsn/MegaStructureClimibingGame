@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://84wdta15qj1k"]
 
 [ext_resource type="Script" uid="uid://blggcqdcx5mcl" path="res://Scripts/Environment/NPC/npc.gd" id="1_oolgl"]
+[ext_resource type="Resource" uid="uid://cxym78ov62voy" path="res://Resources/Scenes/Dialog/dialog_test.tres" id="2_pladk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_675lp"]
 
@@ -13,6 +14,7 @@ radius = 1.0
 [node name="NPC" type="Node3D" unique_id=726526542 node_paths=PackedStringArray("interact_script")]
 script = ExtResource("1_oolgl")
 interact_script = NodePath("InteractNode")
+dialog_res = ExtResource("2_pladk")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1989452394]
 mesh = SubResource("BoxMesh_675lp")

@@ -211,8 +211,12 @@ func follow_camera():
 #region dialog
 
 
-func enter_dialog(dialog_text: String):
-	player_ui.set_dialog_text(dialog_text)
+func enter_dialog(dialog: DialogRes):
+	player_ui.set_dialog_text(dialog)
+
+
+func advance_dialog():
+	player_ui.advance_dialog()
 
 
 func exit_dialog():

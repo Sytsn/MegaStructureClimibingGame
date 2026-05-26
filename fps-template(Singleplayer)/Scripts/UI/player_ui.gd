@@ -7,6 +7,7 @@ var interact: RichTextLabel
 var secondary_cam: Camera3D
 var dialog_text: RichTextLabel
 var dialog_container: ColorRect
+@onready var dialog_manager: DialogManager = %DialogManager
 
 
 func _ready() -> void:
@@ -14,8 +15,7 @@ func _ready() -> void:
 	health_label = %Health
 	interact = %Interact
 	dialog_text = %Dialog
-	dialog_container = %DialogContainer
-	dialog_container.visible = false
+	dialog_manager.visible = false
 	interact.visible = false
 	if get_tree().current_scene:
 		secondary_cam = get_tree().current_scene.get_node("Second Camera") as Camera3D
@@ -37,14 +37,19 @@ func _on_damage_pressed() -> void:
 		player.camera.current = false
 
 
-func set_dialog_text(text: String):
+func set_dialog_text(dialog: DialogRes):
 	player.is_in_dialog = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	dialog_container.visible = true
-	dialog_text.text = text
+	dialog_manager.enter_dialog(dialog)
+
+
+func advance_dialog():
+	var res = dialog_manager.advance_dialog()
+	if !res:
+		exit_dialog_text()
 
 
 func exit_dialog_text():
 	player.is_in_dialog = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	dialog_container.visible = false
+	dialog_manager.visible = false

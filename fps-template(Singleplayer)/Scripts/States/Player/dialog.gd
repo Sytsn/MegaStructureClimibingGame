@@ -17,6 +17,6 @@ func handle_input(event: InputEvent) -> void:
 func update(delta: float) -> void:
 	ui_inputs()
 	if Input.is_action_just_pressed("climb_action"):
-		player.exit_dialog()
+		player.advance_dialog()
 	if player.is_in_dialog == false:
 		finished.emit(IDLE)

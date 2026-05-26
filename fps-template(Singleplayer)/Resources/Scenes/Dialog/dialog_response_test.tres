@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogResponseRes" format=3 uid="uid://qm64h5ia678d"]
+
+[ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_thb11"]
+
+[resource]
+script = ExtResource("1_thb11")
+dialog_response = "Test Response button"
+metadata/_custom_type_script = "uid://b28daxfsp8i3a"

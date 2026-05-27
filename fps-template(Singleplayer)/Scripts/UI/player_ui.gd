@@ -45,11 +45,12 @@ func set_dialog_text(dialog: DialogRes):
 
 func advance_dialog():
 	var res = dialog_manager.advance_dialog()
-	if !res:
+	if res == false:
+		dialog_manager.exit_dialog()
 		exit_dialog_text()
+		
 
 
 func exit_dialog_text():
 	player.is_in_dialog = false
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	dialog_manager.visible = false

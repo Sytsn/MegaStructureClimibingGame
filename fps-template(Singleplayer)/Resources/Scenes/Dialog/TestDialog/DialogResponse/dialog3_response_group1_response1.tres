@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogResponseRes" format=3 uid="uid://kub62gfrkqfv"]
+
+[ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_y4uho"]
+
+[resource]
+script = ExtResource("1_y4uho")
+dialog_response = "This is one of two choices"
+metadata/_custom_type_script = "uid://b28daxfsp8i3a"

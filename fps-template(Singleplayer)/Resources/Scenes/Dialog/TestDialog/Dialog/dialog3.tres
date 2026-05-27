@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogRes" format=3 uid="uid://dgqcdc3ty3nxb"]
+
+[ext_resource type="Script" uid="uid://cheulq54jm1wd" path="res://Resources/Scripts/Dialog/dialog_response_group_res.gd" id="1_x52l6"]
+[ext_resource type="Resource" uid="uid://dc1pou4ftbmk2" path="res://Resources/Scenes/Dialog/TestDialog/DialogGroup/dialog3_response_group1.tres" id="2_th67i"]
+[ext_resource type="Script" uid="uid://b6h51xxk5jugh" path="res://Resources/Scripts/Dialog/dialog_res.gd" id="2_u8bum"]
+
+[resource]
+script = ExtResource("2_u8bum")
+dialog_text = Dictionary[int, String]({
+1: "This is a second response"
+})
+dialog_response = Dictionary[int, ExtResource("1_x52l6")]({
+1: ExtResource("2_th67i")
+})
+metadata/_custom_type_script = "uid://b6h51xxk5jugh"

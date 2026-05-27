@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://n1bmpmajeq05" path="res://Scenes/Player/player.tscn" id="2_mh7mo"]
 [ext_resource type="Texture2D" uid="uid://bl2rf63vix10r" path="res://Assets/Textures/PNG/Dark/texture_08.png" id="3_mh7mo"]
 [ext_resource type="PackedScene" uid="uid://bwuxr5b6qithw" path="res://Scenes/Environment/Interactables/Pickups/upgrade_pickup.tscn" id="4_fvyv6"]
-[ext_resource type="PackedScene" uid="uid://84wdta15qj1k" path="res://Scenes/Environment/NPC/npc.tscn" id="5_e35u1"]
+[ext_resource type="PackedScene" uid="uid://84wdta15qj1k" path="res://Scenes/Environment/NPC/Testing/npc.tscn" id="5_e35u1"]
+[ext_resource type="PackedScene" uid="uid://bc4vo6vf01gtr" path="res://Scenes/Environment/NPC/Testing/TestNPC1.tscn" id="6_5iqf7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fj7yv"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -272,3 +273,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.199266, 0.41299427, -20.664
 [node name="NPC" parent="." unique_id=726526542 instance=ExtResource("5_e35u1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.665966, 0.48099422, -13.75079)
 npc_script_path = "res://Scripts/Environment/NPC/NPCScripts/test_npc.gd"
+
+[node name="NPC2" parent="." unique_id=871585823 instance=ExtResource("6_5iqf7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70101, 0.48099422, -12.379318)

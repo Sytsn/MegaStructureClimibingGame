@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FuncGodotFGDModelPointClass" format=3 uid="uid://c221omd8l32jj"]
 
 [ext_resource type="Script" uid="uid://d1nwwgcrner8b" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class_display_descriptor.gd" id="1_fj545"]
-[ext_resource type="PackedScene" uid="uid://84wdta15qj1k" path="res://Scenes/Environment/NPC/npc.tscn" id="2_8mv63"]
+[ext_resource type="PackedScene" uid="uid://84wdta15qj1k" path="res://Scenes/Environment/NPC/Testing/npc.tscn" id="2_8mv63"]
 [ext_resource type="Script" uid="uid://ldfqjtq0br35" path="res://addons/func_godot/src/fgd/func_godot_fgd_model_point_class.gd" id="2_wth3n"]
 
 [resource]

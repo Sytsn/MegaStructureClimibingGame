@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogRes" format=3 uid="uid://co1dnw3lfe3c8"]
+
+[ext_resource type="Script" uid="uid://cheulq54jm1wd" path="res://Resources/Scripts/Dialog/dialog_response_group_res.gd" id="1_lcs3i"]
+[ext_resource type="Script" uid="uid://b6h51xxk5jugh" path="res://Resources/Scripts/Dialog/dialog_res.gd" id="2_6yc76"]
+
+[resource]
+script = ExtResource("2_6yc76")
+dialog_text = Dictionary[int, String]({
+1: "This is Dialog #2",
+2: "This is the last dialog in this chain"
+})
+metadata/_custom_type_script = "uid://b6h51xxk5jugh"

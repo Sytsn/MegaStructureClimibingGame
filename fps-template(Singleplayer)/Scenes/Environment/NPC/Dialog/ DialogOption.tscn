@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://s8xwq1pta1vm"]
+
+[ext_resource type="Script" uid="uid://bwk08j2c8mg2s" path="res://Scripts/Environment/NPC/Dialog/dialog_option.gd" id="1_5yfqf"]
+
+[node name="DialogOption" type="CenterContainer" unique_id=277435866 node_paths=PackedStringArray("button")]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5yfqf")
+button = NodePath("Button")
+
+[node name="Button" type="Button" parent="." unique_id=1790204654]
+layout_mode = 2
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

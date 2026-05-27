@@ -1,11 +1,8 @@
 [gd_resource type="Resource" script_class="DialogRes" format=3 uid="uid://cxym78ov62voy"]
 
-[ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_2cgeo"]
+[ext_resource type="Script" uid="uid://cheulq54jm1wd" path="res://Resources/Scripts/Dialog/dialog_response_group_res.gd" id="1_2cgeo"]
 [ext_resource type="Script" uid="uid://b6h51xxk5jugh" path="res://Resources/Scripts/Dialog/dialog_res.gd" id="1_i84ty"]
-
-[sub_resource type="Resource" id="Resource_2cgeo"]
-script = ExtResource("1_2cgeo")
-metadata/_custom_type_script = "uid://b28daxfsp8i3a"
+[ext_resource type="Resource" uid="uid://cke28ofabcfq3" path="res://Resources/Scenes/Dialog/dialog_response_group_test.tres" id="2_lowjf"]
 
 [resource]
 script = ExtResource("1_i84ty")
@@ -14,6 +11,6 @@ dialog_text = Dictionary[int, String]({
 2: "Test Response"
 })
 dialog_response = Dictionary[int, ExtResource("1_2cgeo")]({
-2: SubResource("Resource_2cgeo")
+2: ExtResource("2_lowjf")
 })
 metadata/_custom_type_script = "uid://b6h51xxk5jugh"

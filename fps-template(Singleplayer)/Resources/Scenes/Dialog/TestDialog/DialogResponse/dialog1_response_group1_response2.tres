@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogResponseRes" format=3 uid="uid://cohj0np7c8mcj"]
+
+[ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_ftj1i"]
+
+[resource]
+script = ExtResource("1_ftj1i")
+dialog_response = "This choice ends conversation"
+metadata/_custom_type_script = "uid://b28daxfsp8i3a"

@@ -53,13 +53,10 @@ func _process(delta: float) -> void:
 	interactable()
 	if Input.is_action_just_pressed("interact"):
 		if cur_interactable:
-			print("1")
 			cur_interactable.interact()
 		elif cur_area_interactable:
-			print("2")
 			cur_area_interactable.interact()
 		else:
-			print("3")
 			print(cur_interactable)
 			print(cur_area_interactable)
 
@@ -221,8 +218,7 @@ func advance_dialog():
 
 func exit_dialog():
 	player_ui.exit_dialog_text()
-
-
+	
 
 #endregion
 

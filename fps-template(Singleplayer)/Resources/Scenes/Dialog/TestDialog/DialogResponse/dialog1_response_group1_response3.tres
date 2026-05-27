@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="DialogResponseRes" format=3 uid="uid://b4ccagof6r1t"]
 
+[ext_resource type="Resource" uid="uid://dgqcdc3ty3nxb" path="res://Resources/Scenes/Dialog/TestDialog/Dialog/dialog3.tres" id="1_5xeq8"]
 [ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_alrph"]
 
 [resource]
 script = ExtResource("1_alrph")
 dialog_response = "This Choice has another response"
+dialog_res = ExtResource("1_5xeq8")
 metadata/_custom_type_script = "uid://b28daxfsp8i3a"

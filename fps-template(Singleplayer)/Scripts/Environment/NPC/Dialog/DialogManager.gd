@@ -11,6 +11,8 @@ var dialog_keys := []
 var dialog_index := 0
 var dialog_options: Array[DialogOption]
 
+signal exit_dialog_signal
+
 var is_in_response: bool = false
 
 
@@ -41,6 +43,7 @@ func enter_dialog(dialog: DialogRes):
 
 func exit_dialog():
 	reset()
+	exit_dialog_signal.emit()
 
 
 func get_dialog():
@@ -52,8 +55,6 @@ func get_dialog():
 func show_current_line():
 	if dialog_index >= dialog_keys.size():
 		return
-	print("dialog_response_keys ", dialog_res.dialog_response.keys())
-	print("curr_dialog_key ", dialog_keys[dialog_index])
 	var key = dialog_keys[dialog_index]
 	if dialog_res.dialog_response.has(dialog_keys[dialog_index]):
 		dialog_option_text.text = dialog_res.dialog_text[key]

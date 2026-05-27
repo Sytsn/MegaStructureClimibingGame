@@ -11,6 +11,7 @@ var dialog_container: ColorRect
 
 
 func _ready() -> void:
+	dialog_manager.exit_dialog_signal.connect(exit_dialog_text)
 	speed_label = %Speed
 	health_label = %Health
 	interact = %Interact

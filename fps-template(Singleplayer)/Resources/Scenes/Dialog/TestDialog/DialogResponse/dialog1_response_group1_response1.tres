@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="DialogResponseRes" format=3 uid="uid://dbbcslt4a28x1"]
 
+[ext_resource type="Resource" uid="uid://co1dnw3lfe3c8" path="res://Resources/Scenes/Dialog/TestDialog/Dialog/dialog2.tres" id="1_0cuoo"]
 [ext_resource type="Script" uid="uid://b28daxfsp8i3a" path="res://Resources/Scripts/Dialog/dialog_response_res.gd" id="1_5grx2"]
 
 [resource]
 script = ExtResource("1_5grx2")
 dialog_response = "Go to Dialog 2"
+dialog_res = ExtResource("1_0cuoo")
 metadata/_custom_type_script = "uid://b28daxfsp8i3a"

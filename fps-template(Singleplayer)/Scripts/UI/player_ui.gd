@@ -11,6 +11,9 @@ var dialog_container: ColorRect
 
 
 func _ready() -> void:
+	player.clamber_prompt.connect(clamber_prompt)
+	player.toggle_interact_prompt.connect(toggle_interact_prompt)
+	player.set_interact_prompt.connect(set_interact_prompt)
 	dialog_manager.exit_dialog_signal.connect(exit_dialog_text)
 	speed_label = %Speed
 	health_label = %Health
@@ -26,7 +29,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	speed_label.text = "Speed: " + str(player.velocity.length())
 	health_label.text = str(player.health.curr_health)
-	interact.visible = true if player.cur_interactable != null else false
 
 
 func _on_damage_pressed() -> void:
@@ -49,9 +51,22 @@ func advance_dialog():
 	if res == false:
 		dialog_manager.exit_dialog()
 		exit_dialog_text()
-		
 
 
 func exit_dialog_text():
 	player.is_in_dialog = false
 	dialog_manager.visible = false
+
+
+func clamber_prompt(visiblity: bool):
+	toggle_interact_prompt(visiblity)
+	set_interact_prompt("Press Space to Clamber")
+	player.can_clamber = visiblity
+
+
+func toggle_interact_prompt(toggle: bool):
+	interact.visible = toggle
+
+
+func set_interact_prompt(prompt: String = "Press F to Interact"):
+	interact.text = prompt

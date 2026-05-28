@@ -38,6 +38,7 @@ func climb_move():
 	var right: float
 	
 	if can_climb["high"] and !player.is_on_ceiling(): 
+		check_clamber()
 		forward = Input.get_action_strength("move_forward")
 	if can_climb["low"] and !player.is_on_floor():
 		backward = Input.get_action_strength("move_back")
@@ -140,3 +141,16 @@ func check_climbing_bounds():
 		"left": is_left_colliding,
 		"right": is_right_colliding
 	}
+
+
+func check_clamber():
+	var can_climb = check_climbing_bounds()
+	if !can_climb["high"] and !player.is_on_ceiling():
+		player.clamber_prompt.emit(true)
+	else:
+		player.clamber_prompt.emit(false)
+
+
+func clamber():
+	print("clamber")
+	pass

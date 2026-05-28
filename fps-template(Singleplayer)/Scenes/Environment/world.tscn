@@ -143,7 +143,7 @@ collision_layer = 17
 shape = SubResource("ConvexPolygonShape3D_lrwwn")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1396865684]
-transform = Transform3D(8.255596, 0, 0, 0, 11.541916, -0.7091033, 0, 11.60737, 0.7051047, 17.77776, 5.4912715, -19.54583)
+transform = Transform3D(8.255596, 0, 0, 0, 13.480473, -0.56726897, 0, 9.285672, 0.82353264, 17.77776, 5.4912715, -19.54583)
 layers = 16
 mesh = SubResource("BoxMesh_lrwwn")
 

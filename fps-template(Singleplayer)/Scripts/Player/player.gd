@@ -42,6 +42,11 @@ var is_dead = false
 var cur_area_interactable = null
 var cur_interactable = null
 var is_in_dialog = false
+var can_clamber = false
+
+signal clamber_prompt
+signal toggle_interact_prompt
+signal set_interact_prompt
 
 
 func _ready() -> void:
@@ -228,11 +233,13 @@ func interactable():
 		var res = interact_ray.get_collider()
 		if res is Node3D:
 			cur_interactable = res.get_parent()
-			print(cur_interactable)
+			toggle_interact_prompt.emit(true)
 		if res is StaticBody3D:
 			cur_interactable = res
+			toggle_interact_prompt.emit(true)
 	elif !interact_ray.is_colliding() and cur_interactable != null:
 		cur_interactable = null
+		toggle_interact_prompt.emit(false)
 
 
 func check_climbing_state_enter():

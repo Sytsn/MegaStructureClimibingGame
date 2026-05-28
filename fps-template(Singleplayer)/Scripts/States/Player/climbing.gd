@@ -13,6 +13,10 @@ func physics_update(delta: float) -> void:
 	player.climbing_movement.set_average_normal()
 	player.climbing_movement.update_climbing_orientation()
 	player.climbing_movement.climb_move()
+	player.climbing_movement.check_clamber()
+	
+	if Input.is_action_just_pressed("jump") && player.can_clamber:
+		player.climbing_movement.clamber()
 	
 	if Input.is_action_just_released("climb_action"):
 		finished.emit(IDLE)

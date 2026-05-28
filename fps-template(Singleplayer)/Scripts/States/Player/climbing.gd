@@ -9,7 +9,6 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 
 func physics_update(delta: float) -> void:
-	
 	player.climbing_movement.set_average_normal()
 	player.climbing_movement.update_climbing_orientation()
 	player.climbing_movement.climb_move()

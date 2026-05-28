@@ -23,7 +23,8 @@ func set_climbing_offset():
 	if is_nan(target_point.x) or is_nan(target_point.y) or is_nan(target_point.z):
 		print("Target is Nan")
 		return
-	player.global_position = target_point
+	player.global_position.x = target_point.x
+	player.global_position.z = target_point.z
 
 
 func exit_climb():

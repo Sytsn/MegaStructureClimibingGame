@@ -10,6 +10,11 @@ var wall_up: Vector3
 var is_low_colliding: bool 
 var is_high_colliding: bool
 
+var clamber_tween: Tween
+var clamber_tween2: Tween
+
+var is_clambering: bool = false
+
 func check_can_climb():
 	if player.climbing_ray.is_colliding():
 		return true
@@ -153,5 +158,16 @@ func check_clamber():
 
 
 func clamber():
-	print("clamber")
-	pass
+	is_clambering = true
+	if clamber_tween and clamber_tween.is_running():
+		clamber_tween.kill()
+
+	var start_pos = player.global_position
+	var up_pos = start_pos + wall_up * player.player_res.player_height
+	var forward_pos = up_pos + (-wall_normal.normalized() * 1.0)
+
+	clamber_tween = create_tween()
+	clamber_tween.tween_property(player, "global_position", up_pos, 0.3)
+	clamber_tween.tween_property(player, "global_position", forward_pos, 0.3)
+	is_clambering = false
+	return true

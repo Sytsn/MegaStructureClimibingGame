@@ -12,6 +12,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		scripts_node.add_child(instance)
 		body.climbing_movement_setup(instance)
 		self.queue_free()
+		body.animation_player.play("UpgradePickup")
 		
 		if door_id:
 			var door = Global.get_door(door_id)

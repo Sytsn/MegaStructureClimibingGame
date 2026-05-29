@@ -164,6 +164,7 @@ func check_clamber_space():
 		player.clamber_shape_cast.force_shapecast_update()
 		if !player.clamber_shape_cast.is_colliding():
 			player.clamber_shape_cast.position = orig_pos
+			player.clamber_shape_cast.force_shapecast_update()
 			return true
 	return false
 

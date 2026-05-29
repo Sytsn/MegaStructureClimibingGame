@@ -70,6 +70,7 @@ bones/52/position = Vector3(-3.6687124, 0.038491312, 0.0038198528)
 bones/52/rotation = Quaternion(-0.008807481, -0.008830025, 0.70756584, 0.70653737)
 
 [node name="TwoBoneIK3D" type="TwoBoneIK3D" parent="Rig/Skeleton3D" index="1" unique_id=2011683822]
+unique_name_in_owner = true
 active = false
 setting_count = 2
 settings/0/target_node = NodePath("../../../LHandTaget")
@@ -96,6 +97,7 @@ settings/1/use_virtual_end = false
 settings/1/extend_end_bone = false
 
 [node name="CopyTransformModifier3D" type="CopyTransformModifier3D" parent="Rig/Skeleton3D" index="2" unique_id=972939145]
+unique_name_in_owner = true
 active = false
 setting_count = 2
 settings/0/amount = 1.0
@@ -118,6 +120,7 @@ settings/1/invert = 0
 settings/1/additive = false
 
 [node name="LHandTaget" type="Marker3D" parent="." index="2" unique_id=126446892]
+unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.21104658, 0, 0.5758321)
 
 [node name="RHandTaget" type="Marker3D" parent="." index="3" unique_id=1563233689]

@@ -1,7 +1,7 @@
 class_name FPSArms extends Node3D
 
-@onready var ik: TwoBoneIK3D = $Rig/Skeleton3D/TwoBoneIK3D
-@onready var hand_target: Node3D = $LHandTaget
+@onready var ik: TwoBoneIK3D = %TwoBoneIK3D
+@onready var hand_target: Node3D = %LHandTaget
 
 var ik_active = false
 

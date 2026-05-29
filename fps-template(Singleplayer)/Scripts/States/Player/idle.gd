@@ -4,9 +4,9 @@ var animation: Animation
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.velocity.x = 0.0
-	animation = player.animation_player.get_animation("Idle")
+	animation = player.animation_player.get_animation("idle")
 	animation.loop_mode = Animation.LOOP_LINEAR
-	player.animation_player.play("Idle")
+	player.animation_player.queue("idle")
 
 func physics_update(delta: float) -> void:
 	player.stop_player(delta)

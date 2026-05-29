@@ -5,12 +5,15 @@ func enter(previous_state_path: String, data := {}) -> void:
 	player.clamber_prompt.emit(false)
 
 func physics_update(delta: float) -> void:
-	var res = player.climbing_movement.clamber()
-	player.clamber_prompt.emit(false)
+	var res: bool = false
+	if !player.climbing_movement.is_clambering:
+		res = await player.climbing_movement.clamber()
+		player.clamber_prompt.emit(false)
 	
-	finished.emit(IDLE)
+	if (res):
+		finished.emit(IDLE)
 	#if not player.is_on_floor():
-		#finished.emit(FALLING)
+		#finished.emit(FALLING)ssssssssss
 	#elif Input.is_action_just_pressed("jump") or (player.player_res.auto_bhop and Input.is_action_pressed("jump")):
 		#finished.emit(JUMPING)d("sprint"):
 		#finished.emit(SPRINTING)

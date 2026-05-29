@@ -60,7 +60,7 @@ func exit_dialog_text():
 
 func clamber_prompt(visiblity: bool):
 	toggle_interact_prompt(visiblity)
-	set_interact_prompt("Press Space to Clamber")
+	set_interact_prompt("Press Space to Mantle")
 	player.can_clamber = visiblity
 
 

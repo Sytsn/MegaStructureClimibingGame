@@ -169,5 +169,7 @@ func clamber():
 	clamber_tween = create_tween()
 	clamber_tween.tween_property(player, "global_position", up_pos, 0.3)
 	clamber_tween.tween_property(player, "global_position", forward_pos, 0.3)
+	
+	await clamber_tween.finished
 	is_clambering = false
 	return true

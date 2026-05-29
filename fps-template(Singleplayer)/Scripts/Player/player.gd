@@ -234,12 +234,15 @@ func interactable():
 		if res is Node3D:
 			cur_interactable = res.get_parent()
 			toggle_interact_prompt.emit(true)
+			set_interact_prompt.emit()
 		if res is StaticBody3D:
 			cur_interactable = res
 			toggle_interact_prompt.emit(true)
+			set_interact_prompt.emit()
 	elif !interact_ray.is_colliding() and cur_interactable != null:
 		cur_interactable = null
 		toggle_interact_prompt.emit(false)
+		set_interact_prompt.emit()
 
 
 func check_climbing_state_enter():

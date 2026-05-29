@@ -223,7 +223,7 @@ func advance_dialog():
 
 func exit_dialog():
 	player_ui.exit_dialog_text()
-	
+
 
 #endregion
 

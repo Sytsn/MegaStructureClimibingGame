@@ -9,6 +9,7 @@ class_name Player extends CharacterBody3D
 @export var collider: CollisionShape3D
 @export var is_multiplayer: bool = true
 @export var crouch_shape_cast: ShapeCast3D
+@export var clamber_shape_cast: ShapeCast3D
 @export var health_res: HealthRes
 @export var player_aim_ray: RayCast3D
 @export var camera_spring: CameraSpring
@@ -62,9 +63,7 @@ func _process(delta: float) -> void:
 		elif cur_area_interactable:
 			cur_area_interactable.interact()
 		else:
-			print(cur_interactable)
-			print(cur_area_interactable)
-
+			pass
 
 #region Setup
 

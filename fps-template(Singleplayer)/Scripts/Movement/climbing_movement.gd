@@ -151,10 +151,21 @@ func check_climbing_bounds():
 
 func check_clamber():
 	var can_climb = check_climbing_bounds()
-	if !can_climb["high"] and !player.is_on_ceiling():
+	if !can_climb["high"] and !player.is_on_ceiling() && check_clamber_space():
 		player.clamber_prompt.emit(true)
 	else:
 		player.clamber_prompt.emit(false)
+
+
+func check_clamber_space():
+	var orig_pos = player.clamber_shape_cast.position
+	if !player.clamber_shape_cast.is_colliding():
+		player.clamber_shape_cast.global_position = player.clamber_shape_cast.global_position + (-wall_normal.normalized() * 1.0)
+		player.clamber_shape_cast.force_shapecast_update()
+		if !player.clamber_shape_cast.is_colliding():
+			player.clamber_shape_cast.position = orig_pos
+			return true
+	return false
 
 
 func clamber():
@@ -163,7 +174,7 @@ func clamber():
 		clamber_tween.kill()
 
 	var start_pos = player.global_position
-	var up_pos = start_pos + wall_up * player.player_res.player_height
+	var up_pos = start_pos + wall_up * player.player_res.clamber_height_offset
 	var forward_pos = up_pos + (-wall_normal.normalized() * 1.0)
 
 	clamber_tween = create_tween()

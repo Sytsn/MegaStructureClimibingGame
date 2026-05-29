@@ -40,8 +40,6 @@ func handle_input(event: InputEvent) -> void:
 func crouch_inputs():
 	player.crouch_shape_cast.force_shapecast_update()
 
-	if(player.crouch_shape_cast.is_colliding()):
-		print(player.crouch_shape_cast.get_collider(0))
 	if player.exiting_crouching and !player.crouch_shape_cast.is_colliding():
 		player.exit_crouch()
 	if Input.is_action_just_pressed("crouch") && player.is_on_floor():

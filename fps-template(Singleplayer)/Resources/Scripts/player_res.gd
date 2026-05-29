@@ -3,8 +3,6 @@ class_name PlayerRes extends Resource
 @export var camera_pos: Vector3
 @export var fps_arms_rot: Vector3 = Vector3(0, 180, 0)
 
-@export var player_height: float = 2.0
-
 @export_category("Movement")
 @export var move_speed: float = 7.0
 @export var air_speed: float = 3.0
@@ -19,6 +17,7 @@ class_name PlayerRes extends Resource
 @export var climbing_ray_target_pos: Vector3 = Vector3(0, 0, -1.5)
 @export var wall_player_offset: float = 1.0
 @export var climb_speed: float = 10.0
+@export var clamber_height_offset: float = 1.75
 
 @export_category("Air Movement")
 @export var air_cap: float = 0.85

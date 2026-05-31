@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://n1kgrw1w5xs7"
+path="res://.godot/imported/tutorial_test.8.map-e21333a8bf5a1473907814f82af7e411.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/Maps/autosave/tutorial_test.8.map"
+dest_files=["res://.godot/imported/tutorial_test.8.map-e21333a8bf5a1473907814f82af7e411.tres"]
+
+[params]
+

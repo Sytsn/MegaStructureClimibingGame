@@ -15,6 +15,11 @@ var clamber_tween2: Tween
 
 var is_clambering: bool = false
 
+var hand_ik_pos: Vector3 = Vector3.ZERO
+var is_left_target: bool = false
+var is_right_target: bool = false
+
+
 func check_can_climb():
 	if player.climbing_ray.is_colliding():
 		return true
@@ -22,6 +27,7 @@ func check_can_climb():
 
 
 func set_climbing_offset():
+	set_hand_ik()
 	set_average_normal()
 	var wall_offset := 1.0
 	var target_point = wall_hit + (wall_normal.normalized() * wall_offset)
@@ -30,6 +36,30 @@ func set_climbing_offset():
 		return
 	player.global_position.x = target_point.x
 	player.global_position.z = target_point.z
+
+
+func set_hand_ik():
+	if(hand_ik_pos == Vector3.ZERO):
+		hand_ik_pos = wall_hit
+		player.fps_arms.l_hand_target.global_position = hand_ik_pos
+		player.fps_arms.r_hand_target.global_position = hand_ik_pos
+		is_left_target = true
+	if is_left_target:
+		player.fps_arms.r_hand_target.global_position = hand_ik_pos
+	if is_right_target:
+		player.fps_arms.l_hand_target.global_position = hand_ik_pos
+	var diff_pos = hand_ik_pos.distance_to(wall_hit)
+	if diff_pos > 2:
+		hand_ik_pos = wall_hit
+		if is_left_target:
+			player.fps_arms.r_hand_target.global_position = hand_ik_pos
+			is_left_target = false
+			is_right_target = true
+			print(is_right_target)
+		elif is_right_target:
+			player.fps_arms.l_hand_target.global_position = hand_ik_pos
+			is_left_target = true
+			is_right_target = false
 
 
 func exit_climb():
@@ -65,6 +95,9 @@ func climb_move():
 		move_dir = move_dir.normalized() * climb_speed
 	else:
 		move_dir = Vector3.ZERO
+	
+	set_hand_ik()
+	#player.fps_arms.hand_target.global_position = hand_ik_pos
 	
 	player.velocity = move_dir 
 	player.move_and_slide()

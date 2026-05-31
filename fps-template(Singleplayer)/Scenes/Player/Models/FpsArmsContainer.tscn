@@ -2367,6 +2367,7 @@ unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.21104658, 0, 0.5758321)
 
 [node name="RHandTaget" type="Marker3D" parent="FPS Robot ArmsV2" unique_id=444159093]
+unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.21235776, 0, 0.56966305)
 
 [node name="LPoleTarget" type="Marker3D" parent="FPS Robot ArmsV2" unique_id=1399373852]

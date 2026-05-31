@@ -1,7 +1,9 @@
 class_name FPSArms extends Node3D
 
 @onready var ik: TwoBoneIK3D = %TwoBoneIK3D
-@onready var hand_target: Node3D = %LHandTaget
+@onready var l_hand_target: Node3D = %LHandTaget
+@onready var r_hand_target: Node3D = %RHandTaget
+
 
 var ik_active = false
 
@@ -13,7 +15,7 @@ func _ready() -> void:
 func enable_ik():
 	ik_active = true
 	ik.active = true
-	
+
 
 func disable_ik():
 	ik_active = false

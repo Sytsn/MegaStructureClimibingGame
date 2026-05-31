@@ -6,15 +6,18 @@ class_name FPSArms extends Node3D
 var ik_active = false
 
 func _ready() -> void:
-	disable_ik()
+	#disable_ik()
+	pass
 
 
 func enable_ik():
 	ik_active = true
+	ik.active = true
+	
 
 func disable_ik():
 	ik_active = false
-	ik.enabled = false
+	ik.active = false
 
 #func _process(_delta):
 	#if should_ik_wall_grab():

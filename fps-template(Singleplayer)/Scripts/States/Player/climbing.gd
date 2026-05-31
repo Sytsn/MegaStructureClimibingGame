@@ -6,6 +6,8 @@ func enter(previous_state_path: String, data := {}) -> void:
 	player.climbing_movement.set_climbing_offset()
 	player.climbing_movement.update_climbing_orientation(true)
 	player.velocity = Vector3.ZERO
+	player.fps_arms.enable_ik()
+
 	print("climbing")
 
 
@@ -31,3 +33,5 @@ func physics_update(delta: float) -> void:
 func exit() -> void:
 	player.climbing_movement.exit_climb()
 	player.clamber_prompt.emit(false)
+	player.fps_arms.disable_ik()
+	

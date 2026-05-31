@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://do02offkrukr0"]
+
+[ext_resource type="Texture2D" uid="uid://py77v12hcdoy" path="res://Trenchbroom/Textures/128x128/Metal/Horror_Metal_01-128x128.png" id="1_vi4u8"]
+
+[resource]
+albedo_texture = ExtResource("1_vi4u8")
+metallic_specular = 0.0
+texture_filter = 2

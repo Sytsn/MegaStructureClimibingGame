@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://e447jli4drvh"]
+
+[ext_resource type="Script" uid="uid://dakecnn805xyq" path="res://Scripts/Shader/screen_shader_controller.gd" id="1_4arq2"]
+[ext_resource type="Shader" uid="uid://cyrfjpr6ihfu" path="res://Assets/Shaders/Overlay.gdshader" id="1_c8yir"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bw3uq"]
+render_priority = 0
+shader = ExtResource("1_c8yir")
+shader_parameter/pixel_size = 1.0
+shader_parameter/levels = 88.0
+shader_parameter/gamma = Vector2(0.09, 12.13)
+
+[sub_resource type="QuadMesh" id="QuadMesh_4arq2"]
+material = SubResource("ShaderMaterial_bw3uq")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="ScreenShader" type="Node3D" unique_id=348620535 node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_4arq2")
+mesh = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1370502008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.096596, 0, 0)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_4arq2")

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jj8u2p82suvd"
-path.s3tc="res://.godot/imported/Horror_Wall_09-128x128.png-4126b64e0d33a99f2544472cfd8c5703.s3tc.ctex"
+uid="uid://bgqn8o3ltd8vh"
+path.s3tc="res://.godot/imported/concrete2.png-3dc7351531c6d537ec900b0d061c2e44.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Trenchbroom/Textures/128x128/Wall/Horror_Wall_09-128x128.png"
-dest_files=["res://.godot/imported/Horror_Wall_09-128x128.png-4126b64e0d33a99f2544472cfd8c5703.s3tc.ctex"]
+source_file="res://Trenchbroom/Textures/seamless/concrete2.png"
+dest_files=["res://.godot/imported/concrete2.png-3dc7351531c6d537ec900b0d061c2e44.s3tc.ctex"]
 
 [params]
 

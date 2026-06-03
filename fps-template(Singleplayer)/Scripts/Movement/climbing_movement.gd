@@ -6,6 +6,8 @@ var player: Player
 var wall_normal: Vector3
 var wall_hit: Vector3
 var wall_up: Vector3
+var prev_wall_up: Vector3
+
 
 var is_low_colliding: bool 
 var is_high_colliding: bool
@@ -55,7 +57,6 @@ func set_hand_ik():
 			player.fps_arms.r_hand_target.global_position = hand_ik_pos
 			is_left_target = false
 			is_right_target = true
-			print(is_right_target)
 		elif is_right_target:
 			player.fps_arms.l_hand_target.global_position = hand_ik_pos
 			is_left_target = true
@@ -104,6 +105,7 @@ func climb_move():
 
 
 func update_wall_up():
+	prev_wall_up = wall_up
 	var world_up = Vector3.UP
 	wall_up = (world_up - world_up.project(wall_normal.normalized())).normalized()
 
@@ -144,11 +146,12 @@ func set_left_right_container():
 
 
 func update_climbing_orientation(enter_climb: bool = false) -> void:
-	if wall_up == Vector3.UP:
+	if wall_up == prev_wall_up:
 		return
 	var tilt_basis = Basis().looking_at(-wall_normal, wall_up).orthonormalized()
 	player.climbing_pivot.global_transform.basis = tilt_basis
-	if enter_climb:
+	if prev_wall_up != wall_up:
+		print("Player neck change")
 		player.neck.rotation = Vector3.ZERO
 
 

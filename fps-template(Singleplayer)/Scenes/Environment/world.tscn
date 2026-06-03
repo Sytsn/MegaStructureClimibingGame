@@ -259,7 +259,7 @@ collision_layer = 17
 shape = SubResource("ConvexPolygonShape3D_lrwwn")
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="." unique_id=1202970552]
-transform = Transform3D(5.8270383, 0, -1.8203719, 0, 16.369081, 0, -2.3672996, 0, -4.480792, -10.559064, 6.73353, -13.010214)
+transform = Transform3D(5.8270383, 0, -1.8203719, 0, 8.891926, 0, -2.3672996, 0, -4.480792, -10.559064, 2.8344269, -13.010214)
 layers = 16
 mesh = SubResource("BoxMesh_lrwwn")
 
@@ -267,6 +267,17 @@ mesh = SubResource("BoxMesh_lrwwn")
 collision_layer = 17
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D8/StaticBody3D" unique_id=1871662066]
+shape = SubResource("ConvexPolygonShape3D_lrwwn")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="." unique_id=749603550]
+transform = Transform3D(5.8149114, -0.57335234, -1.8165834, 0.375728, 8.873421, -0.1173777, -2.367299, 0, -4.4807916, -10.8939495, 11.468672, -13.010214)
+layers = 16
+mesh = SubResource("BoxMesh_lrwwn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D15" unique_id=1676238919]
+collision_layer = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D15/StaticBody3D" unique_id=256990652]
 shape = SubResource("ConvexPolygonShape3D_lrwwn")
 
 [node name="Second Camera" type="Camera3D" parent="." unique_id=762271007]

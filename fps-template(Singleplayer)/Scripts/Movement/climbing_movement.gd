@@ -21,10 +21,6 @@ var is_left_target: bool = false
 var is_right_target: bool = false
 
 var climb_offset_tween: Tween
-var climb_rotation_start: Basis
-var climb_rotation_target: Basis
-var climb_rotation_start_time: float
-var climb_rotation_duration: float = 0.2
 
 func check_can_climb():
 	if player.climbing_ray.is_colliding():

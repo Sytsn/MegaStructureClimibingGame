@@ -8,7 +8,6 @@ var wall_hit: Vector3
 var wall_up: Vector3
 var prev_wall_up: Vector3
 
-
 var is_low_colliding: bool 
 var is_high_colliding: bool
 
@@ -20,6 +19,8 @@ var is_clambering: bool = false
 var hand_ik_pos: Vector3 = Vector3.ZERO
 var is_left_target: bool = false
 var is_right_target: bool = false
+
+var climb_offset_tween: Tween
 
 
 func check_can_climb():
@@ -33,6 +34,7 @@ func set_climbing_offset():
 	set_average_normal()
 	var wall_offset := 1.0
 	var target_point = wall_hit + (wall_normal.normalized() * wall_offset)
+	print(target_point.distance_to(player.position))
 	if is_nan(target_point.x) or is_nan(target_point.y) or is_nan(target_point.z):
 		print("Target is Nan")
 		return
@@ -64,7 +66,9 @@ func set_hand_ik():
 
 
 func exit_climb():
+	var neck_rot = player.neck.global_rotation
 	player.climbing_pivot.global_transform.basis = player.global_transform.basis
+	player.neck.rotation = Vector3(0, neck_rot.y, 0)
 
 
 func climb_move():
@@ -146,13 +150,17 @@ func set_left_right_container():
 
 
 func update_climbing_orientation(enter_climb: bool = false) -> void:
-	if wall_up == prev_wall_up:
+	if wall_up == Vector3.UP and prev_wall_up == wall_up:
 		return
-	var tilt_basis = Basis().looking_at(-wall_normal, wall_up).orthonormalized()
-	player.climbing_pivot.global_transform.basis = tilt_basis
-	if prev_wall_up != wall_up:
-		print("Player neck change")
-		player.neck.rotation = Vector3.ZERO
+	var forward = -wall_normal.normalized()
+	var up = wall_up
+	var right = up.cross(forward).normalized()
+	up = forward.cross(right).normalized()
+	var neck_rot = player.neck.global_rotation
+	player.climbing_pivot.global_transform.basis = Basis(right, up, forward)
+	if prev_wall_up != wall_up or enter_climb:
+		player.climbing_movement.set_climbing_offset()
+		player.neck.global_rotation = Vector3(0, neck_rot.y, 0)
 
 
 func check_climbing_bounds():

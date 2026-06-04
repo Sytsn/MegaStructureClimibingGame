@@ -29,6 +29,8 @@ func handle_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		player.neck.rotate_y(-event.relative.x * player.player_res.mouse_sens)
+		player.neck.rotation.x = 0
+		player.neck.rotation.z = 0
 		player.camera.rotate_x(-event.relative.y * player.player_res.mouse_sens)
 		player.camera.rotation.x = clamp(
 		player.camera.rotation.x,

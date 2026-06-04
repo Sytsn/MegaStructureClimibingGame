@@ -202,8 +202,7 @@ func exit_crouch():
 
 
 func follow_camera():
-	fps_arms.rotation = neck.rotation + Vector3(deg_to_rad(player_res.fps_arms_rot.x), deg_to_rad(player_res.fps_arms_rot.y), deg_to_rad(player_res.fps_arms_rot.z))
-	pass
+	fps_arms.rotation = Vector3(0, neck.rotation.y + deg_to_rad(player_res.fps_arms_rot.y), 0)
 
 
 #endregion

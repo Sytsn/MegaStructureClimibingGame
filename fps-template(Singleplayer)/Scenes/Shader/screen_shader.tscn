@@ -7,7 +7,7 @@
 render_priority = 0
 shader = ExtResource("1_c8yir")
 shader_parameter/pixel_size = 1.0
-shader_parameter/levels = 88.0
+shader_parameter/levels = 25.0
 shader_parameter/gamma = Vector2(0.09, 12.13)
 
 [sub_resource type="QuadMesh" id="QuadMesh_4arq2"]

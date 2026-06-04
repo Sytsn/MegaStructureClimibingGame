@@ -3,7 +3,7 @@ extends PlayerState
 
 func enter(previous_state_path: String, data := {}) -> void:
 	player.climbing_movement.set_average_normal()
-	player.climbing_movement.set_climbing_offset()
+	player.climbing_movement.set_climbing_offset(true)
 	player.climbing_movement.update_climbing_orientation(true)
 	player.velocity = Vector3.ZERO
 	player.fps_arms.enable_ik()

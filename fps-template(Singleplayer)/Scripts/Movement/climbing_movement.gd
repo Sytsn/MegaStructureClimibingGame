@@ -21,7 +21,10 @@ var is_left_target: bool = false
 var is_right_target: bool = false
 
 var climb_offset_tween: Tween
-
+var climb_rotation_start: Basis
+var climb_rotation_target: Basis
+var climb_rotation_start_time: float
+var climb_rotation_duration: float = 0.2
 
 func check_can_climb():
 	if player.climbing_ray.is_colliding():
@@ -29,17 +32,25 @@ func check_can_climb():
 	return false
 
 
-func set_climbing_offset():
+func set_climbing_offset(enter: bool = false):
 	set_hand_ik()
 	set_average_normal()
+
 	var wall_offset := 1.0
 	var target_point = wall_hit + (wall_normal.normalized() * wall_offset)
-	print(target_point.distance_to(player.position))
+
 	if is_nan(target_point.x) or is_nan(target_point.y) or is_nan(target_point.z):
 		print("Target is Nan")
 		return
-	player.global_position.x = target_point.x
-	player.global_position.z = target_point.z
+
+	if enter:
+		if climb_offset_tween and climb_offset_tween.is_running():
+			climb_offset_tween.kill()
+		climb_offset_tween = get_tree().create_tween()
+		climb_offset_tween.tween_property(player, "global_position", target_point, 0.15)
+	else:
+		player.global_position.x = target_point.x
+		player.global_position.z = target_point.z
 
 
 func set_hand_ik():
@@ -159,7 +170,6 @@ func update_climbing_orientation(enter_climb: bool = false) -> void:
 	var neck_rot = player.neck.global_rotation
 	player.climbing_pivot.global_transform.basis = Basis(right, up, forward)
 	if prev_wall_up != wall_up or enter_climb:
-		player.climbing_movement.set_climbing_offset()
 		player.neck.global_rotation = Vector3(0, neck_rot.y, 0)
 
 

@@ -54,17 +54,18 @@ func set_climbing_offset(enter: bool = false):
 
 
 func set_hand_ik():
+	var right = wall_up.cross(-wall_normal.normalized()).normalized()
 	if(hand_ik_pos == Vector3.ZERO):
 		hand_ik_pos = wall_hit
 		player.fps_arms.l_hand_target.global_position = hand_ik_pos
 		player.fps_arms.r_hand_target.global_position = hand_ik_pos
 		is_left_target = true
 	if is_left_target:
-		player.fps_arms.r_hand_target.global_position = hand_ik_pos
+		player.fps_arms.r_hand_target.global_position = hand_ik_pos + (0.25 * -right) + (0.75 * wall_up)
 	if is_right_target:
-		player.fps_arms.l_hand_target.global_position = hand_ik_pos
+		player.fps_arms.l_hand_target.global_position = hand_ik_pos + (0.25 * right) + (0.75 * wall_up)
 	var diff_pos = hand_ik_pos.distance_to(wall_hit)
-	if diff_pos > 2:
+	if diff_pos > 1.5:
 		hand_ik_pos = wall_hit
 		if is_left_target:
 			player.fps_arms.r_hand_target.global_position = hand_ik_pos

@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://cxd5i2v0dgbfr"
+path="res://.godot/imported/RemakeRoom.map-6f25c0829db235fb4beb6af4a5bd148a.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/Maps/RemakeRoom.map"
+dest_files=["res://.godot/imported/RemakeRoom.map-6f25c0829db235fb4beb6af4a5bd148a.tres"]
+
+[params]
+
